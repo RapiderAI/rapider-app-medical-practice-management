@@ -1,0 +1,159 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RapiderAppBuildLedger",
+  "description": "Schema for app.build.json - The deterministic QA passes, test execution history, and checksum evidence ledger inside each Rapider microapp repository.",
+  "type": "object",
+  "required": [
+    "appKey",
+    "appName",
+    "version",
+    "lastBuildTimestamp",
+    "summary",
+    "pages",
+    "history"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "appKey": { "type": "string" },
+    "appName": { "type": "string" },
+    "repository": { "type": "string" },
+    "version": { "type": "string" },
+    "lastBuildTimestamp": { "type": "string", "format": "date-time" },
+    "lastCommit": { "type": "string" },
+    "summary": {
+      "type": "object",
+      "required": [
+        "status",
+        "complianceRate",
+        "totalPages",
+        "passedPages",
+        "failedPages",
+        "totalQaPasses",
+        "completedQaPasses"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["not_started", "qa_in_progress", "qa_passed", "qa_failed", "stale"]
+        },
+        "complianceRate": { "type": "number", "minimum": 0, "maximum": 100 },
+        "totalPages": { "type": "integer" },
+        "passedPages": { "type": "integer" },
+        "failedPages": { "type": "integer" },
+        "stalePages": { "type": "integer" },
+        "totalQaPasses": { "type": "integer" },
+        "completedQaPasses": { "type": "integer" },
+        "failedQaPasses": { "type": "integer" },
+        "e2eSuitesCount": { "type": "integer" },
+        "e2ePassedCount": { "type": "integer" },
+        "lastFullAudit": { "type": "string", "format": "date-time" },
+        "lastE2ERun": { "type": "string", "format": "date-time" }
+      }
+    },
+    "qaPasses": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "status": { "type": "string", "enum": ["passed", "failed", "pending", "skipped"] },
+          "lastRun": { "type": "string", "format": "date-time" },
+          "pagesCovered": { "type": "integer" },
+          "issuesFound": { "type": "integer" }
+        }
+      }
+    },
+    "pages": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "pageName",
+          "route",
+          "fileHash",
+          "status",
+          "lastTested"
+        ],
+        "properties": {
+          "pageName": { "type": "string" },
+          "route": { "type": "string" },
+          "fileHash": { "type": "string" },
+          "lastModified": { "type": "string", "format": "date-time" },
+          "lastTested": { "type": "string", "format": "date-time" },
+          "status": {
+            "type": "string",
+            "enum": ["passed", "failed", "stale", "pending"]
+          },
+          "qaPasses": { "type": "object" },
+          "metrics": {
+            "type": "object",
+            "properties": {
+              "buttonsTotal": { "type": "integer" },
+              "buttonsWithActions": { "type": "integer" },
+              "deadButtons": { "type": "integer" },
+              "linksTotal": { "type": "integer" },
+              "linksValid": { "type": "integer" },
+              "nativeAlerts": { "type": "integer" },
+              "contrastCompliant": { "type": "boolean" },
+              "swrCalls": { "type": "integer" },
+              "modalsTotal": { "type": "integer" }
+            }
+          },
+          "e2eTests": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "suiteName": { "type": "string" },
+                "status": { "type": "string", "enum": ["passed", "failed"] },
+                "timestamp": { "type": "string", "format": "date-time" },
+                "stepsCount": { "type": "integer" },
+                "passedSteps": { "type": "integer" }
+              }
+            }
+          },
+          "issues": { "type": "array" },
+          "warnings": { "type": "array" }
+        }
+      }
+    },
+    "e2eSuites": {
+      "type": "object",
+      "properties": {
+        "expectationsFile": { "type": "string" },
+        "lastRun": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["passed", "failed", "not_run"] },
+        "suites": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "suiteName": { "type": "string" },
+              "status": { "type": "string", "enum": ["passed", "failed"] },
+              "stepsPassed": { "type": "integer" },
+              "stepsFailed": { "type": "integer" },
+              "timestamp": { "type": "string", "format": "date-time" }
+            }
+          }
+        }
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["timestamp", "action", "status"],
+        "properties": {
+          "timestamp": { "type": "string", "format": "date-time" },
+          "action": { "type": "string" },
+          "commit": { "type": "string" },
+          "complianceRate": { "type": "number" },
+          "pagesAudited": { "type": "integer" },
+          "status": { "type": "string" },
+          "agent": { "type": "string" },
+          "details": { "type": "string" }
+        }
+      }
+    }
+  }
+}

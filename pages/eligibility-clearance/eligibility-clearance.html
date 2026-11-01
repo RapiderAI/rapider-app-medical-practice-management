@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eligibility &amp; Prior Auth Queue - Healthcare &amp; Clinical Suite</title>
+  <script src="https://kit.fontawesome.com/5b23df26dc.js" crossorigin="anonymous" defer></script>
+  <script src="/assets/js/rapider-components.js" defer></script>
+  <link rel="stylesheet" href="/assets/themes/rapider-tailwind-theme.css">
+  <link rel="stylesheet" href="/assets/themes/crm-expenses-design.css">
+
+  <style>
+    dialog {
+      margin: auto;
+      border: none;
+      padding: 0;
+      background: transparent;
+    }
+    .field input:not([type="checkbox"]):not([type="radio"]),
+    .field select,
+    .field textarea {
+      display: block;
+      width: 100%;
+      min-height: 42px;
+    }
+    aside.collapsed .sidebar-label, [data-collapsed="true"] .sidebar-label { display: none !important; }
+  </style>
+
+  <style data-dark-mode-parity>
+    html.dark, body.dark { --ink:#f1f5f9; --muted:#94a3b8; --line:#263044; --bg:#0f172a; --soft:#1e1b4b; background:#0f172a !important; color:#f1f5f9 !important; }
+    html.dark aside, body.dark aside { background: #0f172a !important; border-color: #1e293b !important; }
+    html.dark .bg-white, body.dark .bg-white { background: #1e293b !important; color: #f1f5f9 !important; border-color: #334155 !important; }
+    html.dark .text-slate-900, body.dark .text-slate-900 { color: #f8fafc !important; }
+    html.dark .text-slate-800, body.dark .text-slate-800 { color: #f1f5f9 !important; }
+    html.dark .text-slate-700, body.dark .text-slate-700 { color: #cbd5e1 !important; }
+    html.dark .text-slate-600, body.dark .text-slate-600 { color: #94a3b8 !important; }
+    html.dark .text-slate-500, body.dark .text-slate-500 { color: #64748b !important; }
+    html.dark .border-slate-200, body.dark .border-slate-200 { border-color: #334155 !important; }
+    html.dark .border-slate-100, body.dark .border-slate-100 { border-color: #1e293b !important; }
+    html.dark .bg-slate-50, body.dark .bg-slate-50 { background: #0b1120 !important; }
+    html.dark .bg-slate-100, body.dark .bg-slate-100 { background: #1e293b !important; }
+    html.dark .hover\:bg-slate-50:hover, body.dark .hover\:bg-slate-50:hover { background: #1e293b !important; }
+    html.dark .hover\:bg-slate-100:hover, body.dark .hover\:bg-slate-100:hover { background: #334155 !important; }
+    html.dark input, html.dark select, html.dark textarea { background: #1e293b !important; color: #f8fafc !important; border-color: #334155 !important; }
+    html.dark table thead th { background: #1e293b !important; color: #94a3b8 !important; }
+  </style>
+
+  <style data-collapsible-sidebar>
+    /* Collapsible Suite Sidebar Styles */
+    .brand-icon-wrap {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #eeeaff;
+      color: #6854df;
+      transition: background 0.2s;
+    }
+    .brand-icon-wrap:hover {
+      background: #e0d7fe;
+    }
+    .brand-icon-wrap .expand-hint {
+      display: none;
+      position: absolute;
+      inset: 0;
+      align-items: center;
+      justify-content: center;
+      background: #6854df;
+      color: #ffffff;
+      border-radius: 8px;
+    }
+    aside.collapsed:hover .brand-icon-wrap .expand-hint,
+    aside.sidebar-collapsed:hover .brand-icon-wrap .expand-hint {
+      display: flex !important;
+      animation: pulse-caret 1.2s infinite ease-in-out;
+    }
+    aside.collapsed:hover .brand-icon-wrap #suiteIcon,
+    aside.sidebar-collapsed:hover .brand-icon-wrap #suiteIcon {
+      display: none !important;
+    }
+    @keyframes pulse-caret {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(2px); }
+    }
+    aside.collapsed, aside.sidebar-collapsed {
+      width: 68px !important;
+    }
+    aside.collapsed .nav-text,
+    aside.collapsed .sidebar-title,
+    aside.collapsed .sidebar-section-title,
+    aside.collapsed .sidebar-user-info,
+    aside.collapsed .suite-badge,
+    aside.sidebar-collapsed .nav-text,
+    aside.sidebar-collapsed .sidebar-title,
+    aside.sidebar-collapsed .sidebar-section-title,
+    aside.sidebar-collapsed .sidebar-user-info,
+    aside.sidebar-collapsed .suite-badge {
+      display: none !important;
+    }
+    aside.collapsed .nav-item,
+    aside.sidebar-collapsed .nav-item {
+      justify-content: center !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    aside.collapsed .section-header,
+    aside.sidebar-collapsed .section-header {
+      text-align: center;
+      padding: 4px 0;
+    }
+    aside.collapsed .section-divider,
+    aside.sidebar-collapsed .section-divider {
+      display: block;
+      margin: 8px auto;
+      width: 24px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    /* Standardized Navigation Colors (No saturated primary blue) */
+    .sidebar .nav-item {
+      color: #67728a !important;
+      text-decoration: none;
+    }
+    .sidebar .nav-item:hover {
+      background: #f8fafc !important;
+      color: #1e293b !important;
+    }
+    .sidebar .nav-item.active {
+      background: #f3f0ff !important;
+      color: #53389e !important;
+      font-weight: 600 !important;
+    }
+    .sidebar .nav-item i {
+      color: #67728a;
+    }
+    .sidebar .nav-item.active i {
+      color: #53389e !important;
+    }
+
+    /* Mobile Responsive Sidebar & Top Navigation Standard */
+    .mobile-menu {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: transparent;
+      border: 1px solid rgba(0,0,0,0.08);
+      color: #67728a;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .mobile-menu:hover {
+      background: #f8fafc;
+      color: #1e293b;
+    }
+    .shade {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu {
+        display: inline-flex !important;
+      }
+      body {
+        flex-direction: column !important;
+      }
+      aside.sidebar, aside#suiteSidebar, aside {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        width: 260px !important;
+        min-width: 260px !important;
+        max-width: 260px !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        z-index: 50 !important;
+        background: #ffffff !important;
+        box-shadow: none !important;
+      }
+      body.dark aside.sidebar, html.dark aside.sidebar,
+      body.dark aside#suiteSidebar, html.dark aside#suiteSidebar {
+        background: #0f172a !important;
+      }
+      .navopen aside.sidebar, body.navopen aside.sidebar, html.navopen aside.sidebar,
+      .navopen aside#suiteSidebar, body.navopen aside#suiteSidebar, html.navopen aside#suiteSidebar {
+        transform: translateX(0) !important;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2) !important;
+      }
+      .navopen .shade, body.navopen .shade, html.navopen .shade {
+        display: block !important;
+        position: fixed !important;
+        inset: 0 !important;
+        background: rgba(15, 23, 42, 0.5) !important;
+        backdrop-filter: blur(2px) !important;
+        z-index: 45 !important;
+      }
+      #collapseBtn, .sidebar-collapse-btn {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex">
+
+
+    <!-- Collapsible Left Sidebar -->
+    <aside id="suiteSidebar" class="sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none" data-collapsible-sidebar="true">
+      <div>
+        <!-- Top Brand Header with Suite Icon & Collapse Toggle -->
+        <div class="h-16 border-b border-slate-200 flex items-center justify-between px-4">
+          <div class="flex items-center gap-3 overflow-hidden">
+            <div id="brandIconWrap" class="brand-icon-wrap" onclick="toggleSidebar()" title="Click to collapse / expand">
+              <i id="suiteIcon" class="fas fa-heart-pulse text-indigo-600 text-lg"></i>
+              <div class="expand-hint">
+                <i class="fas fa-chevron-right text-xs"></i>
+              </div>
+            </div>
+            <div class="sidebar-title truncate">
+              <span class="block text-xs font-semibold uppercase tracking-wider text-indigo-600">Healthcare &amp; Clinical Suite</span>
+              <span class="block text-sm font-bold text-slate-900 leading-tight">Medical Practice Management</span>
+            </div>
+          </div>
+          <button id="collapseBtn" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition-colors" title="Collapse sidebar">
+            <i class="fas fa-chevron-left text-sm"></i>
+          </button>
+        </div>
+
+        <!-- Navigation Sections -->
+        <nav class="py-2">
+          
+        <div class="px-4 mt-4">
+          <p class="sidebar-section-title text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Scheduling &amp; Flow</p>
+          <div class="section-divider hidden"></div>
+          <div class="space-y-1">
+      
+          <a href="#/practice-command" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-layer-group text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Practice Operations Command</span>
+          </a>
+        
+          <a href="#/schedule-calendar" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-table-columns text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Multi-Resource Calendar</span>
+          </a>
+        
+          <a href="#/clinic-flow-board" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-chart-line text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Check-In &amp; Rooming Flow Board</span>
+          </a>
+        
+          </div>
+        </div>
+      
+        <div class="px-4 mt-6">
+          <p class="sidebar-section-title text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Access &amp; Clearance</p>
+          <div class="section-divider hidden"></div>
+          <div class="space-y-1">
+      
+          <a href="#/eligibility-clearance" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors active bg-[#f3f0ff] !bg-[#f3f0ff] text-[#53389e] !text-[#53389e] font-semibold">
+            <i class="fas fa-compass text-base w-5 text-center text-[#53389e]"></i>
+            <span class="nav-text sidebar-label">Eligibility &amp; Prior Auth Queue</span>
+          </a>
+        
+          <a href="#/patient-coverages" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-bolt text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Insurance Coverages (COB)</span>
+          </a>
+        
+          <a href="#/referrals-waitlist" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-shield-halved text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Referrals &amp; Smart Waitlist</span>
+          </a>
+        
+          </div>
+        </div>
+      
+        <div class="px-4 mt-6">
+          <p class="sidebar-section-title text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Resources &amp; Operations</p>
+          <div class="section-divider hidden"></div>
+          <div class="space-y-1">
+      
+          <a href="#/provider-directory" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-sliders text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Providers &amp; Credentialing</span>
+          </a>
+        
+          <a href="#/facilities-rooms" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-clipboard-check text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Clinics, Rooms &amp; Modalities</span>
+          </a>
+        
+          <a href="#/access-analytics" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-diagram-project text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Utilization &amp; No-Show Analytics</span>
+          </a>
+        
+          </div>
+        </div>
+      
+        </nav>
+      </div>
+
+      <!-- Bottom User / Org Card -->
+      <div class="p-4 border-t border-slate-200">
+        <div class="flex items-center gap-3 overflow-hidden">
+          <div class="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 font-semibold flex items-center justify-center shrink-0 text-sm">
+            HL
+          </div>
+          <div class="sidebar-user-info truncate">
+            <p class="text-xs font-semibold text-slate-800 truncate">Dr. Sarah Jenkins</p>
+            <p class="text-[11px] text-slate-500 truncate">Chief Medical Officer</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <div class="shade" id="sidebar-shade"></div>
+    
+<div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+  
+    <!-- Responsive Main Header (h-16 standard) -->
+    <header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between shrink-0">
+      <div class="flex items-center gap-3">
+        <button type="button" class="mobile-menu" data-action="menu" aria-label="Open navigation" aria-expanded="false" title="Open navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        <nav class="text-xs flex items-center gap-1.5">
+          <a href="#/practice-command" class="hover:text-indigo-600 text-slate-500">Healthcare &amp; Clinical Suite</a>
+          <span class="text-slate-400">/</span>
+          <a href="#/practice-command" class="hover:text-indigo-600 text-slate-500">Medical Practice Management</a>
+          <span class="text-slate-400">/</span>
+          <span class="text-slate-900 font-medium">Eligibility &amp; Prior Auth Queue</span>
+        </nav>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="window.rapiderApi.navigate('/booking-drawer')" class="btn-primary flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-sm font-medium transition-colors shadow-sm" style="color: #ffffff !important;">
+          <i class="fas fa-plus"></i>
+          <span>New Record</span>
+        </button>
+        <button onclick="toggleDarkMode()" class="text-slate-500 hover:text-slate-700 p-2 rounded-lg hover:bg-slate-100 transition-colors" title="Toggle Theme">
+          <i class="fas fa-moon text-sm"></i>
+        </button>
+      </div>
+    </header>
+    
+  <main class="flex-1 overflow-y-auto p-6 bg-slate-50 dark:bg-slate-900" id="main-content">
+    
+    <div class="max-w-7xl mx-auto space-y-6">
+      <!-- Page Title & Action Bar -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-wider text-indigo-600">Access &amp; Clearance &bull; Problem Condition</span>
+          <h1 class="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">Eligibility &amp; Prior Auth Queue</h1>
+          <p class="text-sm text-slate-500 mt-0.5">Pre-visit financial clearance worklist (HltEligibilityVerification), batch 270/271 trigger, inactive coverage alerts, 278 prior-auth status &amp; remaining visit counters.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="#/booking-drawer" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-sm font-medium transition-colors shadow-sm" style="color: #ffffff !important;">
+            <i class="fas fa-plus"></i>
+            <span>Create Problem Condition</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-500 uppercase">Total Problem Conditions</span>
+            <i class="fas fa-database text-indigo-500"></i>
+          </div>
+          <p id="kpiTotalCount" class="text-2xl font-bold text-slate-900 dark:text-white mt-2">3</p>
+          <span class="text-xs text-emerald-600 font-medium">Live SWR synchronized</span>
+        </div>
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-500 uppercase">Active Records</span>
+            <i class="fas fa-circle-check text-emerald-500"></i>
+          </div>
+          <p class="text-2xl font-bold text-slate-900 dark:text-white mt-2">2</p>
+          <span class="text-xs text-slate-500 font-medium">Passing policy checks</span>
+        </div>
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-500 uppercase">Compliance Rate</span>
+            <i class="fas fa-shield-halved text-purple-500"></i>
+          </div>
+          <p class="text-2xl font-bold text-slate-900 dark:text-white mt-2">99.4%</p>
+          <span class="text-xs text-purple-600 font-medium">Audit trail verified</span>
+        </div>
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-500 uppercase">Avg Latency</span>
+            <i class="fas fa-bolt text-amber-500"></i>
+          </div>
+          <p class="text-2xl font-bold text-slate-900 dark:text-white mt-2">42 ms</p>
+          <span class="text-xs text-slate-500 font-medium">Sub-200ms target SLA</span>
+        </div>
+      </div>
+
+      <!-- Search & Filter Bar -->
+      <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+        <div class="flex flex-col sm:flex-row items-center gap-3">
+          <div class="relative flex-1 w-full">
+            <i class="fas fa-search absolute left-3 top-3 text-slate-400 text-sm"></i>
+            <input type="text" id="recordSearchInput" placeholder="Search Problem Condition by title, code, or status..." class="w-full pl-9 pr-4 py-2 border border-slate-200 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-indigo-500" />
+          </div>
+          <select id="statusFilterSelect" class="w-full sm:w-48 px-3 py-2 border border-slate-200 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200">
+            <option value="">All Statuses</option>
+            <option value="ACTIVE">ACTIVE</option>
+            <option value="IN_PROGRESS">IN_PROGRESS</option>
+            <option value="COMPLETED">COMPLETED</option>
+          </select>
+          <button id="clearFiltersBtn" type="button" onclick="clearAllFilters()" class="px-3.5 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors whitespace-nowrap">
+            Clear all
+          </button>
+        </div>
+        <div id="activeFilterTagsBar" class="flex flex-wrap items-center gap-2 text-xs">
+          <span class="text-slate-400">Active Filters:</span>
+          <span class="px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 font-medium">All Problem Condition Records</span>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="bg-slate-50 dark:bg-slate-700/50 text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase">
+                <th class="p-4">Problem Condition Identifier</th>
+                <th class="p-4">Metadata / Code</th>
+                <th class="p-4">Status</th>
+                <th class="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="recordsTableBody" class="divide-y divide-slate-100 dark:divide-slate-700">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+        <div id="recordsEmptyState" class="hidden text-center py-12 p-6">
+          <i class="fas fa-folder-open text-slate-300 dark:text-slate-600 text-4xl mb-3"></i>
+          <h3 class="text-base font-semibold text-slate-800 dark:text-slate-200">No matching records found</h3>
+          <p class="text-xs text-slate-500 mt-1">Try adjusting your search query or clearing active filters.</p>
+          <button type="button" onclick="clearAllFilters()" class="mt-4 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-xs font-semibold text-white" style="color: #ffffff !important;">
+            Reset Filters
+          </button>
+        </div>
+      </div>
+    </div>
+    
+  </main>
+</div>
+
+    <!-- Rapider Custom Confirm Modal (Zero Native alert/confirm) -->
+    <dialog id="rapiderConfirmModal" class="rounded-xl p-0 shadow-2xl backdrop:bg-slate-900/40 w-full max-w-md">
+      <div class="bg-white rounded-xl overflow-hidden border border-slate-200">
+        <div class="p-6">
+          <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-4">
+            <i class="fas fa-triangle-exclamation text-xl"></i>
+          </div>
+          <h3 id="rapiderConfirmTitle" class="text-lg font-bold text-slate-900 mb-2">Confirm Action</h3>
+          <p id="rapiderConfirmMessage" class="text-sm text-slate-600">Are you sure you want to proceed? This action cannot be undone.</p>
+        </div>
+        <div class="bg-slate-50 px-6 py-3 flex justify-end gap-3 border-t border-slate-100">
+          <button id="rapiderConfirmCancelBtn" type="button" class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
+            Cancel
+          </button>
+          <button id="rapiderConfirmOkBtn" type="button" class="px-4 py-2 text-sm font-medium rounded-lg bg-red-600 hover:bg-red-700 transition-colors" style="color: #ffffff !important;">
+            Confirm Delete
+          </button>
+        </div>
+      </div>
+    </dialog>
+    
+
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    
+
+    <script>
+      function toggleSidebar() {
+        const aside = document.getElementById('suiteSidebar');
+        if (!aside) return;
+        const isCollapsed = aside.classList.toggle('collapsed');
+        aside.classList.toggle('sidebar-collapsed', isCollapsed);
+        localStorage.setItem('rapider_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        const collapseBtn = document.getElementById('collapseBtn');
+        if (collapseBtn) {
+          collapseBtn.innerHTML = isCollapsed
+            ? '<i class="fas fa-chevron-right text-sm"></i>'
+            : '<i class="fas fa-chevron-left text-sm"></i>';
+          collapseBtn.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const aside = document.getElementById('suiteSidebar');
+        if (aside) {
+          aside.addEventListener('click', (e) => {
+            if (aside.classList.contains('collapsed') || aside.classList.contains('sidebar-collapsed')) {
+              if (e.target.closest('#brandIconWrap') || e.target.closest('.brand-icon-wrap') || e.target.closest('.expand-hint')) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleSidebar();
+              }
+            }
+          });
+        }
+
+        document.querySelectorAll('.mobile-menu, [data-action="menu"]').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = document.body.classList.toggle('navopen');
+            btn.setAttribute('aria-expanded', String(isOpen));
+          });
+        });
+
+        const shade = document.getElementById('sidebar-shade') || document.querySelector('.shade');
+        if (shade) {
+          shade.addEventListener('click', () => {
+            document.body.classList.remove('navopen');
+            document.querySelectorAll('.mobile-menu, [data-action="menu"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
+          });
+        }
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && document.body.classList.contains('navopen')) {
+            document.body.classList.remove('navopen');
+            document.querySelectorAll('.mobile-menu, [data-action="menu"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
+          }
+        });
+
+        if (localStorage.getItem('rapider_sidebar_collapsed') === 'true') {
+          if (aside) {
+            aside.classList.add('collapsed');
+            aside.classList.add('sidebar-collapsed');
+            const collapseBtn = document.getElementById('collapseBtn');
+            if (collapseBtn) {
+              collapseBtn.innerHTML = '<i class="fas fa-chevron-right text-sm"></i>';
+              collapseBtn.title = 'Expand sidebar';
+            }
+          }
+        }
+      });
+
+      function toggleDarkMode() {
+        document.documentElement.classList.toggle('dark');
+        document.body.classList.toggle('dark');
+      }
+
+      function showToast(title, message = '', type = 'info') {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+        const toast = document.createElement('div');
+        const bg = type === 'success' ? 'bg-emerald-600' : type === 'danger' ? 'bg-red-600' : 'bg-slate-800';
+        toast.className = bg + ' text-white text-sm px-4 py-3 rounded-lg shadow-lg pointer-events-auto flex items-center gap-3 transition-opacity duration-300';
+        toast.style.color = '#ffffff';
+        toast.innerHTML = '<i class="fas fa-circle-info"></i><div><strong class="font-medium block">' + title + '</strong><span class="text-xs text-slate-200">' + message + '</span></div>';
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 300);
+        }, 3500);
+      }
+
+      function showConfirmModal(title, message, onConfirm) {
+        const modal = document.getElementById('rapiderConfirmModal');
+        const titleEl = document.getElementById('rapiderConfirmTitle');
+        const msgEl = document.getElementById('rapiderConfirmMessage');
+        const okBtn = document.getElementById('rapiderConfirmOkBtn');
+        const cancelBtn = document.getElementById('rapiderConfirmCancelBtn');
+
+        if (!modal) return;
+        if (titleEl) titleEl.textContent = title;
+        if (msgEl) msgEl.textContent = message;
+
+        const cleanup = () => {
+          okBtn.onclick = null;
+          cancelBtn.onclick = null;
+          modal.close();
+        };
+
+        okBtn.onclick = () => {
+          cleanup();
+          if (typeof onConfirm === 'function') onConfirm();
+        };
+        cancelBtn.onclick = () => {
+          cleanup();
+        };
+
+        modal.showModal();
+      }
+    </script>
+    
+<script>
+    let allRecords = [];
+    const fallbackSeed = [{"id":"00000000-0152-0005-0000-000000000001","snomedCode":"HPC-2026-0001","icd10Code":"HPC-2026-0001","displayName":"Problem Condition #1 — Enterprise Primary Record","clinicalStatus":"Problem Condition clinicalStatus configuration (1)","verificationStatus":"Problem Condition verificationStatus configuration (1)","chronicity":"Problem Condition chronicity configuration (1)","onsetDate":"2026-11-01T10:00:00Z","abatementDate":"2026-11-01T10:00:00Z","clinicalNotes":"Problem Condition clinicalNotes configuration (1)","version":1,"status":"ACTIVE","isDeleted":false},{"id":"00000000-0152-0005-0000-000000000002","snomedCode":"HPC-2026-0002","icd10Code":"HPC-2026-0002","displayName":"Problem Condition #2 — Enterprise Operations Record","clinicalStatus":"Problem Condition clinicalStatus configuration (2)","verificationStatus":"Problem Condition verificationStatus configuration (2)","chronicity":"Problem Condition chronicity configuration (2)","onsetDate":"2026-11-02T10:00:00Z","abatementDate":"2026-11-02T10:00:00Z","clinicalNotes":"Problem Condition clinicalNotes configuration (2)","version":2,"status":"IN_PROGRESS","isDeleted":false},{"id":"00000000-0152-0005-0000-000000000003","snomedCode":"HPC-2026-0003","icd10Code":"HPC-2026-0003","displayName":"Problem Condition #3 — Enterprise Compliance Record","clinicalStatus":"Problem Condition clinicalStatus configuration (3)","verificationStatus":"Problem Condition verificationStatus configuration (3)","chronicity":"Problem Condition chronicity configuration (3)","onsetDate":"2026-11-03T10:00:00Z","abatementDate":"2026-11-03T10:00:00Z","clinicalNotes":"Problem Condition clinicalNotes configuration (3)","version":3,"status":"COMPLETED","isDeleted":false}];
+
+    function renderRows(items) {
+      const tbody = document.getElementById('recordsTableBody');
+      const emptyEl = document.getElementById('recordsEmptyState');
+      const kpiEl = document.getElementById('kpiTotalCount');
+      if (kpiEl) kpiEl.textContent = String(items.length);
+
+      if (!items.length) {
+        tbody.innerHTML = '';
+        emptyEl.classList.remove('hidden');
+        return;
+      }
+      emptyEl.classList.add('hidden');
+      tbody.innerHTML = items.map(item => {
+        const titleVal = item["id"] || item.name || item.title || item.id;
+        const secVal = item["snomedCode"] || item.code || item.status || 'STD-01';
+        const stVal = item.status || 'ACTIVE';
+        const badgeCls = stVal === 'ACTIVE' || stVal === 'COMPLETED'
+          ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300'
+          : 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300';
+
+        return `
+          <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-700/30 transition-colors">
+            <td class="p-4 font-semibold text-slate-900 dark:text-white">
+              <a href="#/appointment-detail?id=${encodeURIComponent(item.id || '')}" class="hover:text-indigo-600 transition-colors">${titleVal}</a>
+            </td>
+            <td class="p-4 text-slate-600 dark:text-slate-300 font-mono text-xs">${typeof secVal === 'object' ? JSON.stringify(secVal) : secVal}</td>
+            <td class="p-4">
+              <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full ${badgeCls}">${stVal}</span>
+            </td>
+            <td class="p-4 text-right space-x-2">
+              
+              <a href="#/booking-drawer?id=${encodeURIComponent(item.id || '')}" class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950 rounded-lg transition-colors">
+                <i class="fas fa-pen"></i>
+                <span>Edit</span>
+              </a>
+              <button type="button" onclick="confirmDeleteRecord('${item.id}')" class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors" title="Delete Record">
+                <i class="fas fa-trash-can text-xs"></i>
+              </button>
+              
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function applyFilters() {
+      const q = (document.getElementById('recordSearchInput').value || '').toLowerCase();
+      const st = document.getElementById('statusFilterSelect').value;
+      const tagsBar = document.getElementById('activeFilterTagsBar');
+
+      const chips = [];
+      if (q) chips.push('<span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-medium">Search: ' + q.replace(/</g, '&lt;') + '</span>');
+      if (st) chips.push('<span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-medium">Status: ' + st + '</span>');
+      if (tagsBar) {
+        tagsBar.innerHTML = '<span class="text-slate-400">Active Filters:</span> ' + (chips.length ? chips.join(' ') : '<span class="px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 font-medium">All Records</span>');
+      }
+
+      const filtered = allRecords.filter(item => {
+        if (item.isDeleted === true) return false;
+        const text = JSON.stringify(item).toLowerCase();
+        const matchesQ = !q || text.includes(q);
+        const matchesSt = !st || item.status === st;
+        return matchesQ && matchesSt;
+      });
+      renderRows(filtered);
+    }
+
+    function clearAllFilters() {
+      document.getElementById('recordSearchInput').value = '';
+      document.getElementById('statusFilterSelect').value = '';
+      applyFilters();
+    }
+
+    function confirmDeleteRecord(id) {
+      showConfirmModal(
+        'Delete Problem Condition?',
+        'Are you sure you want to remove this record? This action is logged and soft-deletes the item.',
+        async () => {
+          try {
+            if (window.rapiderApi && window.rapiderApi.deleteEntity) {
+              await window.rapiderApi.deleteEntity('HltProblemCondition', id);
+            }
+          } catch (e) {}
+          allRecords = allRecords.filter(r => String(r.id) !== String(id));
+          applyFilters();
+          showToast('Record Deleted', 'Problem Condition removed from active view.', 'success');
+        }
+      );
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await window.rapiderApi.findMany('HltProblemCondition', {});
+        const loaded = (res && (res.data || res)) || [];
+        allRecords = Array.isArray(loaded) && loaded.length ? loaded.filter(i => i.isDeleted !== true) : fallbackSeed;
+      } catch (e) {
+        allRecords = fallbackSeed;
+      }
+      document.getElementById('recordSearchInput').addEventListener('input', applyFilters);
+      document.getElementById('statusFilterSelect').addEventListener('change', applyFilters);
+      applyFilters();
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+# Rappider App Builder - AI Agent Rules
+# This file is read automatically by Cursor and Windsurf IDEs.
+
+You are an expert AI Agent assisting a developer in building a Rappider application.
+This application uses the Rappider **Compact Architecture** with a Two-Way GitHub Synchronization loop. 
+
+### THE SOURCE OF TRUTH
+The single source of truth for this application is `app.manifest.json` located in the root folder. You do NOT need to interface directly with a database or create complex backend configurations. 
+
+### CRITICAL RULES
+Before modifying or creating anything in this repository, you MUST read the following rules to understand the synchronization architecture:
+
+1. Read `.agents/rules/app-definition.md` for instructions on how to update the application manifest and register new pages.
+2. Read `.agents/rules/app-metadata.md` for instructions on how to structure the application's core metadata, tags, and Scope of Work.
+3. Read `.agents/rules/app-data-models.md` for instructions on how to define database schemas and AI configurations in the manifest.
+4. Read `.agents/rules/app-page.md` for instructions on how to structure the manifest definitions for new UI pages.
+5. Read `.agents/rules/app-page-html.md` for instructions on how to build the frontend `pages/[route]/[route].html` files using Tailwind and `window.rapiderApi`.
+6. Read `.agents/rules/app-sample-data.md` for sample data generation rules and the mandatory zeroed-out initial 8-character block ID standard (`00000000-xxxx-xxxx-xxxx-xxxxxxxxxxxx`).
+7. Read `.agents/rules/app-qa-workflow.md` for the mandatory 20-pass QA loop and deterministic page verification standards.
+8. **AI Rules Source of Truth (`rapider-ai-rules`):** Whenever any AI rules or QA passes (`.agents/rules/**`, `AGENTS.md`, `.cursorrules`, `.windsurfrules`) are updated, ALWAYS update the canonical source-of-truth repository (`rapider-ai-rules`), commit/push it to `origin/main`, and sync via `sync-app-rules.js` — never update rules only in an individual app repo.

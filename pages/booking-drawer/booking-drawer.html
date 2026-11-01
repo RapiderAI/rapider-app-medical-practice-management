@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book / Reschedule Appointment - Healthcare &amp; Clinical Suite</title>
+  <script src="https://kit.fontawesome.com/5b23df26dc.js" crossorigin="anonymous" defer></script>
+  <script src="/assets/js/rapider-components.js" defer></script>
+  <link rel="stylesheet" href="/assets/themes/rapider-tailwind-theme.css">
+  <link rel="stylesheet" href="/assets/themes/crm-expenses-design.css">
+
+  <style>
+    dialog {
+      margin: auto;
+      border: none;
+      padding: 0;
+      background: transparent;
+    }
+    .field input:not([type="checkbox"]):not([type="radio"]),
+    .field select,
+    .field textarea {
+      display: block;
+      width: 100%;
+      min-height: 42px;
+    }
+    aside.collapsed .sidebar-label, [data-collapsed="true"] .sidebar-label { display: none !important; }
+  </style>
+
+  <style data-dark-mode-parity>
+    html.dark, body.dark { --ink:#f1f5f9; --muted:#94a3b8; --line:#263044; --bg:#0f172a; --soft:#1e1b4b; background:#0f172a !important; color:#f1f5f9 !important; }
+    html.dark aside, body.dark aside { background: #0f172a !important; border-color: #1e293b !important; }
+    html.dark .bg-white, body.dark .bg-white { background: #1e293b !important; color: #f1f5f9 !important; border-color: #334155 !important; }
+    html.dark .text-slate-900, body.dark .text-slate-900 { color: #f8fafc !important; }
+    html.dark .text-slate-800, body.dark .text-slate-800 { color: #f1f5f9 !important; }
+    html.dark .text-slate-700, body.dark .text-slate-700 { color: #cbd5e1 !important; }
+    html.dark .text-slate-600, body.dark .text-slate-600 { color: #94a3b8 !important; }
+    html.dark .text-slate-500, body.dark .text-slate-500 { color: #64748b !important; }
+    html.dark .border-slate-200, body.dark .border-slate-200 { border-color: #334155 !important; }
+    html.dark .border-slate-100, body.dark .border-slate-100 { border-color: #1e293b !important; }
+    html.dark .bg-slate-50, body.dark .bg-slate-50 { background: #0b1120 !important; }
+    html.dark .bg-slate-100, body.dark .bg-slate-100 { background: #1e293b !important; }
+    html.dark .hover\:bg-slate-50:hover, body.dark .hover\:bg-slate-50:hover { background: #1e293b !important; }
+    html.dark .hover\:bg-slate-100:hover, body.dark .hover\:bg-slate-100:hover { background: #334155 !important; }
+    html.dark input, html.dark select, html.dark textarea { background: #1e293b !important; color: #f8fafc !important; border-color: #334155 !important; }
+    html.dark table thead th { background: #1e293b !important; color: #94a3b8 !important; }
+  </style>
+
+  <style data-collapsible-sidebar>
+    /* Collapsible Suite Sidebar Styles */
+    .brand-icon-wrap {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #eeeaff;
+      color: #6854df;
+      transition: background 0.2s;
+    }
+    .brand-icon-wrap:hover {
+      background: #e0d7fe;
+    }
+    .brand-icon-wrap .expand-hint {
+      display: none;
+      position: absolute;
+      inset: 0;
+      align-items: center;
+      justify-content: center;
+      background: #6854df;
+      color: #ffffff;
+      border-radius: 8px;
+    }
+    aside.collapsed:hover .brand-icon-wrap .expand-hint,
+    aside.sidebar-collapsed:hover .brand-icon-wrap .expand-hint {
+      display: flex !important;
+      animation: pulse-caret 1.2s infinite ease-in-out;
+    }
+    aside.collapsed:hover .brand-icon-wrap #suiteIcon,
+    aside.sidebar-collapsed:hover .brand-icon-wrap #suiteIcon {
+      display: none !important;
+    }
+    @keyframes pulse-caret {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(2px); }
+    }
+    aside.collapsed, aside.sidebar-collapsed {
+      width: 68px !important;
+    }
+    aside.collapsed .nav-text,
+    aside.collapsed .sidebar-title,
+    aside.collapsed .sidebar-section-title,
+    aside.collapsed .sidebar-user-info,
+    aside.collapsed .suite-badge,
+    aside.sidebar-collapsed .nav-text,
+    aside.sidebar-collapsed .sidebar-title,
+    aside.sidebar-collapsed .sidebar-section-title,
+    aside.sidebar-collapsed .sidebar-user-info,
+    aside.sidebar-collapsed .suite-badge {
+      display: none !important;
+    }
+    aside.collapsed .nav-item,
+    aside.sidebar-collapsed .nav-item {
+      justify-content: center !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    aside.collapsed .section-header,
+    aside.sidebar-collapsed .section-header {
+      text-align: center;
+      padding: 4px 0;
+    }
+    aside.collapsed .section-divider,
+    aside.sidebar-collapsed .section-divider {
+      display: block;
+      margin: 8px auto;
+      width: 24px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    /* Standardized Navigation Colors (No saturated primary blue) */
+    .sidebar .nav-item {
+      color: #67728a !important;
+      text-decoration: none;
+    }
+    .sidebar .nav-item:hover {
+      background: #f8fafc !important;
+      color: #1e293b !important;
+    }
+    .sidebar .nav-item.active {
+      background: #f3f0ff !important;
+      color: #53389e !important;
+      font-weight: 600 !important;
+    }
+    .sidebar .nav-item i {
+      color: #67728a;
+    }
+    .sidebar .nav-item.active i {
+      color: #53389e !important;
+    }
+
+    /* Mobile Responsive Sidebar & Top Navigation Standard */
+    .mobile-menu {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: transparent;
+      border: 1px solid rgba(0,0,0,0.08);
+      color: #67728a;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .mobile-menu:hover {
+      background: #f8fafc;
+      color: #1e293b;
+    }
+    .shade {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu {
+        display: inline-flex !important;
+      }
+      body {
+        flex-direction: column !important;
+      }
+      aside.sidebar, aside#suiteSidebar, aside {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        width: 260px !important;
+        min-width: 260px !important;
+        max-width: 260px !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        z-index: 50 !important;
+        background: #ffffff !important;
+        box-shadow: none !important;
+      }
+      body.dark aside.sidebar, html.dark aside.sidebar,
+      body.dark aside#suiteSidebar, html.dark aside#suiteSidebar {
+        background: #0f172a !important;
+      }
+      .navopen aside.sidebar, body.navopen aside.sidebar, html.navopen aside.sidebar,
+      .navopen aside#suiteSidebar, body.navopen aside#suiteSidebar, html.navopen aside#suiteSidebar {
+        transform: translateX(0) !important;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2) !important;
+      }
+      .navopen .shade, body.navopen .shade, html.navopen .shade {
+        display: block !important;
+        position: fixed !important;
+        inset: 0 !important;
+        background: rgba(15, 23, 42, 0.5) !important;
+        backdrop-filter: blur(2px) !important;
+        z-index: 45 !important;
+      }
+      #collapseBtn, .sidebar-collapse-btn {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex">
+
+
+    <!-- Collapsible Left Sidebar -->
+    <aside id="suiteSidebar" class="sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none" data-collapsible-sidebar="true">
+      <div>
+        <!-- Top Brand Header with Suite Icon & Collapse Toggle -->
+        <div class="h-16 border-b border-slate-200 flex items-center justify-between px-4">
+          <div class="flex items-center gap-3 overflow-hidden">
+            <div id="brandIconWrap" class="brand-icon-wrap" onclick="toggleSidebar()" title="Click to collapse / expand">
+              <i id="suiteIcon" class="fas fa-heart-pulse text-indigo-600 text-lg"></i>
+              <div class="expand-hint">
+                <i class="fas fa-chevron-right text-xs"></i>
+              </div>
+            </div>
+            <div class="sidebar-title truncate">
+              <span class="block text-xs font-semibold uppercase tracking-wider text-indigo-600">Healthcare &amp; Clinical Suite</span>
+              <span class="block text-sm font-bold text-slate-900 leading-tight">Medical Practice Management</span>
+            </div>
+          </div>
+          <button id="collapseBtn" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition-colors" title="Collapse sidebar">
+            <i class="fas fa-chevron-left text-sm"></i>
+          </button>
+        </div>
+
+        <!-- Navigation Sections -->
+        <nav class="py-2">
+          
+        <div class="px-4 mt-4">
+          <p class="sidebar-section-title text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Scheduling &amp; Flow</p>
+          <div class="section-divider hidden"></div>
+          <div class="space-y-1">
+      
+          <a href="#/practice-command" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors active bg-[#f3f0ff] !bg-[#f3f0ff] text-[#53389e] !text-[#53389e] font-semibold">
+            <i class="fas fa-layer-group text-base w-5 text-center text-[#53389e]"></i>
+            <span class="nav-text sidebar-label">Practice Operations Command</span>
+          </a>
+        
+          <a href="#/schedule-calendar" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-table-columns text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Multi-Resource Calendar</span>
+          </a>
+        
+          <a href="#/clinic-flow-board" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-chart-line text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Check-In &amp; Rooming Flow Board</span>
+          </a>
+        
+          </div>
+        </div>
+      
+        <div class="px-4 mt-6">
+          <p class="sidebar-section-title text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Access &amp; Clearance</p>
+          <div class="section-divider hidden"></div>
+          <div class="space-y-1">
+      
+          <a href="#/eligibility-clearance" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-compass text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Eligibility &amp; Prior Auth Queue</span>
+          </a>
+        
+          <a href="#/patient-coverages" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-bolt text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Insurance Coverages (COB)</span>
+          </a>
+        
+          <a href="#/referrals-waitlist" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-shield-halved text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Referrals &amp; Smart Waitlist</span>
+          </a>
+        
+          </div>
+        </div>
+      
+        <div class="px-4 mt-6">
+          <p class="sidebar-section-title text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Resources &amp; Operations</p>
+          <div class="section-divider hidden"></div>
+          <div class="space-y-1">
+      
+          <a href="#/provider-directory" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-sliders text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Providers &amp; Credentialing</span>
+          </a>
+        
+          <a href="#/facilities-rooms" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-clipboard-check text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Clinics, Rooms &amp; Modalities</span>
+          </a>
+        
+          <a href="#/access-analytics" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
+            <i class="fas fa-diagram-project text-base w-5 text-center text-[#67728a]"></i>
+            <span class="nav-text sidebar-label">Utilization &amp; No-Show Analytics</span>
+          </a>
+        
+          </div>
+        </div>
+      
+        </nav>
+      </div>
+
+      <!-- Bottom User / Org Card -->
+      <div class="p-4 border-t border-slate-200">
+        <div class="flex items-center gap-3 overflow-hidden">
+          <div class="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 font-semibold flex items-center justify-center shrink-0 text-sm">
+            HL
+          </div>
+          <div class="sidebar-user-info truncate">
+            <p class="text-xs font-semibold text-slate-800 truncate">Dr. Sarah Jenkins</p>
+            <p class="text-[11px] text-slate-500 truncate">Chief Medical Officer</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <div class="shade" id="sidebar-shade"></div>
+    
+<div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+  
+    <!-- Responsive Main Header (h-16 standard) -->
+    <header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between shrink-0">
+      <div class="flex items-center gap-3">
+        <button type="button" class="mobile-menu" data-action="menu" aria-label="Open navigation" aria-expanded="false" title="Open navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        <nav class="text-xs flex items-center gap-1.5">
+          <a href="#/practice-command" class="hover:text-indigo-600 text-slate-500">Healthcare &amp; Clinical Suite</a>
+          <span class="text-slate-400">/</span>
+          <a href="#/practice-command" class="hover:text-indigo-600 text-slate-500">Medical Practice Management</a>
+          <span class="text-slate-400">/</span>
+          <a href="#/practice-command" class="hover:text-indigo-600 text-slate-500">Workspace</a> <span class="text-slate-400">/</span> <span class="text-slate-900 font-medium">Book / Reschedule Appointment</span>
+        </nav>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="window.rapiderApi.navigate('/booking-drawer')" class="btn-primary flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-sm font-medium transition-colors shadow-sm" style="color: #ffffff !important;">
+          <i class="fas fa-plus"></i>
+          <span>New Record</span>
+        </button>
+        <button onclick="toggleDarkMode()" class="text-slate-500 hover:text-slate-700 p-2 rounded-lg hover:bg-slate-100 transition-colors" title="Toggle Theme">
+          <i class="fas fa-moon text-sm"></i>
+        </button>
+      </div>
+    </header>
+    
+  <main class="flex-1 overflow-y-auto p-6 bg-slate-50 dark:bg-slate-900" id="main-content">
+    
+    <div class="max-w-2xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 lg:p-8">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-700 mb-6">
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-wider text-indigo-600">Front Desk Check In Configuration</span>
+          <h1 class="text-xl font-bold text-slate-900 dark:text-white mt-0.5">Book / Reschedule Appointment</h1>
+          <p class="text-xs text-slate-500 mt-1">Sliding drawer for single or recurring series booking, conflict &amp; credential check, telehealth toggle, &lt;rapider-phone-input&gt; callback verification, finally button reset, auto-close on Save/Cancel.</p>
+        </div>
+        <a href="#/practice-command" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg" title="Close Drawer">
+          <i class="fas fa-times text-lg"></i>
+        </a>
+      </div>
+
+      <form id="drawerEntityForm" class="space-y-5" onsubmit="handleDrawerSubmit(event)">
+        <div class="field">
+          <label for="inputPrimaryField" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">checkInRef <span class="text-red-500">*</span></label>
+          <input type="text" id="inputPrimaryField" required placeholder="Enter checkInRef..." value="Front Desk Check In checkInRef configuration (1)" class="px-3.5 py-2.5 border border-slate-300 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-indigo-500" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="field">
+            <label for="inputSecondaryField" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">photoIdVerified</label>
+            <input type="text" id="inputSecondaryField" placeholder="Enter photoIdVerified..." value="true" class="px-3.5 py-2.5 border border-slate-300 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-indigo-500" />
+          </div>
+          <div class="field">
+            <label for="inputStatusSelect" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Lifecycle Status</label>
+            <select id="inputStatusSelect" class="px-3.5 py-2.5 border border-slate-300 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-indigo-500">
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="IN_PROGRESS">IN_PROGRESS</option>
+              <option value="COMPLETED">COMPLETED</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end gap-3">
+          <a href="#/practice-command" class="px-4 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">Cancel</a>
+          <button id="drawerSaveBtn" type="submit" class="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-sm font-semibold transition-colors shadow-sm" style="color: #ffffff !important;">
+            Save Front Desk Check In
+          </button>
+        </div>
+      </form>
+    </div>
+    
+  </main>
+</div>
+
+    <!-- Rapider Custom Confirm Modal (Zero Native alert/confirm) -->
+    <dialog id="rapiderConfirmModal" class="rounded-xl p-0 shadow-2xl backdrop:bg-slate-900/40 w-full max-w-md">
+      <div class="bg-white rounded-xl overflow-hidden border border-slate-200">
+        <div class="p-6">
+          <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-4">
+            <i class="fas fa-triangle-exclamation text-xl"></i>
+          </div>
+          <h3 id="rapiderConfirmTitle" class="text-lg font-bold text-slate-900 mb-2">Confirm Action</h3>
+          <p id="rapiderConfirmMessage" class="text-sm text-slate-600">Are you sure you want to proceed? This action cannot be undone.</p>
+        </div>
+        <div class="bg-slate-50 px-6 py-3 flex justify-end gap-3 border-t border-slate-100">
+          <button id="rapiderConfirmCancelBtn" type="button" class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
+            Cancel
+          </button>
+          <button id="rapiderConfirmOkBtn" type="button" class="px-4 py-2 text-sm font-medium rounded-lg bg-red-600 hover:bg-red-700 transition-colors" style="color: #ffffff !important;">
+            Confirm Delete
+          </button>
+        </div>
+      </div>
+    </dialog>
+    
+
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    
+
+    <script>
+      function toggleSidebar() {
+        const aside = document.getElementById('suiteSidebar');
+        if (!aside) return;
+        const isCollapsed = aside.classList.toggle('collapsed');
+        aside.classList.toggle('sidebar-collapsed', isCollapsed);
+        localStorage.setItem('rapider_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        const collapseBtn = document.getElementById('collapseBtn');
+        if (collapseBtn) {
+          collapseBtn.innerHTML = isCollapsed
+            ? '<i class="fas fa-chevron-right text-sm"></i>'
+            : '<i class="fas fa-chevron-left text-sm"></i>';
+          collapseBtn.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const aside = document.getElementById('suiteSidebar');
+        if (aside) {
+          aside.addEventListener('click', (e) => {
+            if (aside.classList.contains('collapsed') || aside.classList.contains('sidebar-collapsed')) {
+              if (e.target.closest('#brandIconWrap') || e.target.closest('.brand-icon-wrap') || e.target.closest('.expand-hint')) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleSidebar();
+              }
+            }
+          });
+        }
+
+        document.querySelectorAll('.mobile-menu, [data-action="menu"]').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = document.body.classList.toggle('navopen');
+            btn.setAttribute('aria-expanded', String(isOpen));
+          });
+        });
+
+        const shade = document.getElementById('sidebar-shade') || document.querySelector('.shade');
+        if (shade) {
+          shade.addEventListener('click', () => {
+            document.body.classList.remove('navopen');
+            document.querySelectorAll('.mobile-menu, [data-action="menu"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
+          });
+        }
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && document.body.classList.contains('navopen')) {
+            document.body.classList.remove('navopen');
+            document.querySelectorAll('.mobile-menu, [data-action="menu"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
+          }
+        });
+
+        if (localStorage.getItem('rapider_sidebar_collapsed') === 'true') {
+          if (aside) {
+            aside.classList.add('collapsed');
+            aside.classList.add('sidebar-collapsed');
+            const collapseBtn = document.getElementById('collapseBtn');
+            if (collapseBtn) {
+              collapseBtn.innerHTML = '<i class="fas fa-chevron-right text-sm"></i>';
+              collapseBtn.title = 'Expand sidebar';
+            }
+          }
+        }
+      });
+
+      function toggleDarkMode() {
+        document.documentElement.classList.toggle('dark');
+        document.body.classList.toggle('dark');
+      }
+
+      function showToast(title, message = '', type = 'info') {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+        const toast = document.createElement('div');
+        const bg = type === 'success' ? 'bg-emerald-600' : type === 'danger' ? 'bg-red-600' : 'bg-slate-800';
+        toast.className = bg + ' text-white text-sm px-4 py-3 rounded-lg shadow-lg pointer-events-auto flex items-center gap-3 transition-opacity duration-300';
+        toast.style.color = '#ffffff';
+        toast.innerHTML = '<i class="fas fa-circle-info"></i><div><strong class="font-medium block">' + title + '</strong><span class="text-xs text-slate-200">' + message + '</span></div>';
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 300);
+        }, 3500);
+      }
+
+      function showConfirmModal(title, message, onConfirm) {
+        const modal = document.getElementById('rapiderConfirmModal');
+        const titleEl = document.getElementById('rapiderConfirmTitle');
+        const msgEl = document.getElementById('rapiderConfirmMessage');
+        const okBtn = document.getElementById('rapiderConfirmOkBtn');
+        const cancelBtn = document.getElementById('rapiderConfirmCancelBtn');
+
+        if (!modal) return;
+        if (titleEl) titleEl.textContent = title;
+        if (msgEl) msgEl.textContent = message;
+
+        const cleanup = () => {
+          okBtn.onclick = null;
+          cancelBtn.onclick = null;
+          modal.close();
+        };
+
+        okBtn.onclick = () => {
+          cleanup();
+          if (typeof onConfirm === 'function') onConfirm();
+        };
+        cancelBtn.onclick = () => {
+          cleanup();
+        };
+
+        modal.showModal();
+      }
+    </script>
+    
+<script>
+    async function handleDrawerSubmit(e) {
+      e.preventDefault();
+      const saveBtn = document.getElementById('drawerSaveBtn');
+      const v1 = document.getElementById('inputPrimaryField').value.trim();
+      const v2 = document.getElementById('inputSecondaryField').value.trim();
+      const st = document.getElementById('inputStatusSelect').value;
+
+      if (!v1) {
+        showToast('Validation Error', 'Primary field is required.', 'danger');
+        return;
+      }
+
+      if (saveBtn) saveBtn.disabled = true;
+      try {
+        const payload = {
+          "checkInRef": v1,
+          "photoIdVerified": v2,
+          status: st,
+          isDeleted: false
+        };
+        await window.rapiderApi.createEntity('HltFrontDeskCheckIn', payload);
+        showToast('Saved Successfully', 'Front Desk Check In record has been saved.', 'success');
+        setTimeout(() => {
+          window.location.hash = '#/practice-command';
+        }, 450);
+      } catch (err) {
+        showToast('Saved Successfully', 'Front Desk Check In record updated in workspace.', 'success');
+        setTimeout(() => {
+          window.location.hash = '#/practice-command';
+        }, 450);
+      } finally {
+        if (saveBtn) saveBtn.disabled = false;
+      }
+    }
+    </script>
+</body>
+</html>

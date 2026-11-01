@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rapider Medical Practice Management</title>
+  <script src="https://kit.fontawesome.com/5b23df26dc.js" crossorigin="anonymous" defer></script>
+  <script src="/assets/js/rapider-components.js" defer></script>
+  <link rel="stylesheet" href="/assets/themes/rapider-tailwind-theme.css">
+  <link rel="stylesheet" href="/assets/themes/crm-expenses-design.css">
+  <style>
+    body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; }
+    iframe#appFrame { width: 100%; height: 100%; border: none; }
+  </style>
+</head>
+<body>
+  <iframe id="appFrame" src="pages/practice-command/practice-command.html"></iframe>
+  <script>
+    const routes = {
+  "practice-command": "pages/practice-command/practice-command.html",
+  "schedule-calendar": "pages/schedule-calendar/schedule-calendar.html",
+  "clinic-flow-board": "pages/clinic-flow-board/clinic-flow-board.html",
+  "eligibility-clearance": "pages/eligibility-clearance/eligibility-clearance.html",
+  "patient-coverages": "pages/patient-coverages/patient-coverages.html",
+  "referrals-waitlist": "pages/referrals-waitlist/referrals-waitlist.html",
+  "provider-directory": "pages/provider-directory/provider-directory.html",
+  "facilities-rooms": "pages/facilities-rooms/facilities-rooms.html",
+  "access-analytics": "pages/access-analytics/access-analytics.html",
+  "appointment-detail": "pages/appointment-detail/appointment-detail.html",
+  "booking-drawer": "pages/booking-drawer/booking-drawer.html",
+  "checkin-copay-drawer": "pages/checkin-copay-drawer/checkin-copay-drawer.html"
+};
+    function handleHash() {
+      const hash = window.location.hash.replace(/^#\/?/, '').split('?')[0];
+      const route = hash || 'practice-command';
+      const target = routes[route] || routes['practice-command'];
+      const iframe = document.getElementById('appFrame');
+      if (iframe) iframe.src = target;
+    }
+    window.addEventListener('hashchange', handleHash);
+    window.addEventListener('load', handleHash);
+  </script>
+</body>
+</html>
