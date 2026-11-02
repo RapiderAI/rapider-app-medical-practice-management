@@ -4,8 +4,8 @@
   "appName": "Rapider Medical Practice Management",
   "repository": "",
   "version": "1.0.0",
-  "lastBuildTimestamp": "2026-11-01T12:09:14.377Z",
-  "lastCommit": "548a2b4",
+  "lastBuildTimestamp": "2026-11-02T09:49:16.424Z",
+  "lastCommit": "0bdb151",
   "summary": {
     "status": "qa_passed",
     "complianceRate": 100,
@@ -18,147 +18,147 @@
     "failedQaPasses": 0,
     "e2eSuitesCount": 0,
     "e2ePassedCount": 0,
-    "lastFullAudit": "2026-11-01T12:09:14.377Z",
+    "lastFullAudit": "2026-11-02T09:49:16.424Z",
     "lastE2ERun": null
   },
   "qaPasses": {
     "pass-01-routing": {
       "name": "pass-01-routing",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-02-swr": {
       "name": "pass-02-swr",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-03-data-models": {
       "name": "pass-03-data-models",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-04-modals": {
       "name": "pass-04-modals",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-05-drawers": {
       "name": "pass-05-drawers",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-06-responsive": {
       "name": "pass-06-responsive",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-07-themes": {
       "name": "pass-07-themes",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-08-notifications": {
       "name": "pass-08-notifications",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-09-payloads": {
       "name": "pass-09-payloads",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-10-components": {
       "name": "pass-10-components",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-11-e2e-expectations": {
       "name": "pass-11-e2e-expectations",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-12-asset-externalization": {
       "name": "pass-12-asset-externalization",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-13-manifest-sync": {
       "name": "pass-13-manifest-sync",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-14-ui-states": {
       "name": "pass-14-ui-states",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-15-security": {
       "name": "pass-15-security",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-16-accessibility": {
       "name": "pass-16-accessibility",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-17-input-formatting": {
       "name": "pass-17-input-formatting",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-18-kanban-list-views": {
       "name": "pass-18-kanban-list-views",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-19-ui-best-practices": {
       "name": "pass-19-ui-best-practices",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     },
     "pass-20-search-filters": {
       "name": "pass-20-search-filters",
       "status": "passed",
-      "lastRun": "2026-11-01T12:09:14.377Z",
+      "lastRun": "2026-11-02T09:49:16.424Z",
       "pagesCovered": 12,
       "issuesFound": 0
     }
@@ -167,408 +167,264 @@
     "pages/practice-command/practice-command.html": {
       "pageName": "Practice Operations Command",
       "route": "practice-command",
-      "fileHash": "sha256:568aeb40c2e2cab72d8935401b206d28ced7351253aef64b7080a2e8b91e5a87",
-      "lastModified": "2026-11-01T12:09:14.270Z",
-      "lastTested": "2026-11-01T12:09:14.377Z",
+      "fileHash": "sha256:6897ccbf3d3a7f3438accdf4e0d2aa326781c0ac8d1cee0f8bbd3512bca1d91a",
+      "lastModified": "2026-11-02T09:49:16.296Z",
+      "lastTested": "2026-11-02T09:49:16.424Z",
       "status": "passed",
       "metrics": {
-        "buttonsTotal": 8,
-        "buttonsWithActions": 8,
+        "buttonsTotal": 5,
+        "buttonsWithActions": 5,
         "deadButtons": 0,
-        "linksTotal": 12,
-        "linksValid": 12,
+        "linksTotal": 15,
+        "linksValid": 15,
         "nativeAlerts": 0,
         "contrastCompliant": true,
-        "swrCalls": 2,
-        "modalsTotal": 1
+        "swrCalls": 0,
+        "modalsTotal": 0
       },
       "issues": [],
-      "warnings": [
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_LIGHT_BACKGROUND",
-          "message": "Container has \"bg-white\" without a corresponding \"dark:bg-*\" variant class (sidebar w-64 bg-white border-r border-slate-200 fl).",
-          "snippet": "<div class=\"sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none\">"
-        },
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_DARK_TEXT",
-          "message": "Text has hardcoded dark color without a corresponding \"dark:text-*\" variant (bg-slate-50 text-slate-900 font-sans antialiased m).",
-          "snippet": "<div class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex\">"
-        }
-      ]
+      "warnings": []
     },
     "pages/schedule-calendar/schedule-calendar.html": {
       "pageName": "Multi-Resource Calendar",
       "route": "schedule-calendar",
-      "fileHash": "sha256:64fc2fbb3a5bc80d0f6c8b600eaaf43255fbdeb370937cfd3a40dfce2d91079d",
-      "lastModified": "2026-11-01T12:09:14.271Z",
-      "lastTested": "2026-11-01T12:09:14.377Z",
+      "fileHash": "sha256:bdf04c3b4be8460d5c5703fb99833dc3965c7b08baac2ccc6903a8de56338c23",
+      "lastModified": "2026-11-02T09:49:16.296Z",
+      "lastTested": "2026-11-02T09:49:16.424Z",
       "status": "passed",
       "metrics": {
-        "buttonsTotal": 8,
-        "buttonsWithActions": 8,
-        "deadButtons": 0,
-        "linksTotal": 12,
-        "linksValid": 12,
-        "nativeAlerts": 0,
-        "contrastCompliant": true,
-        "swrCalls": 2,
-        "modalsTotal": 1
-      },
-      "issues": [],
-      "warnings": [
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_LIGHT_BACKGROUND",
-          "message": "Container has \"bg-white\" without a corresponding \"dark:bg-*\" variant class (sidebar w-64 bg-white border-r border-slate-200 fl).",
-          "snippet": "<div class=\"sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none\">"
-        },
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_DARK_TEXT",
-          "message": "Text has hardcoded dark color without a corresponding \"dark:text-*\" variant (bg-slate-50 text-slate-900 font-sans antialiased m).",
-          "snippet": "<div class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex\">"
-        }
-      ]
-    },
-    "pages/clinic-flow-board/clinic-flow-board.html": {
-      "pageName": "Check-In & Rooming Flow Board",
-      "route": "clinic-flow-board",
-      "fileHash": "sha256:d74561e0668bdd05c19878ed7fe0d7dd6ebacba1e19a5f097aafe5604cd3716d",
-      "lastModified": "2026-11-01T12:09:14.271Z",
-      "lastTested": "2026-11-01T12:09:14.377Z",
-      "status": "passed",
-      "metrics": {
-        "buttonsTotal": 8,
-        "buttonsWithActions": 8,
-        "deadButtons": 0,
-        "linksTotal": 12,
-        "linksValid": 12,
-        "nativeAlerts": 0,
-        "contrastCompliant": true,
-        "swrCalls": 2,
-        "modalsTotal": 1
-      },
-      "issues": [],
-      "warnings": [
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_LIGHT_BACKGROUND",
-          "message": "Container has \"bg-white\" without a corresponding \"dark:bg-*\" variant class (sidebar w-64 bg-white border-r border-slate-200 fl).",
-          "snippet": "<div class=\"sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none\">"
-        },
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_DARK_TEXT",
-          "message": "Text has hardcoded dark color without a corresponding \"dark:text-*\" variant (bg-slate-50 text-slate-900 font-sans antialiased m).",
-          "snippet": "<div class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex\">"
-        }
-      ]
-    },
-    "pages/eligibility-clearance/eligibility-clearance.html": {
-      "pageName": "Eligibility & Prior Auth Queue",
-      "route": "eligibility-clearance",
-      "fileHash": "sha256:fd9648c1dc296a0b5a7f160118bf60fe13e3b40dd1129f2728dcf6edb4d865ce",
-      "lastModified": "2026-11-01T12:09:14.273Z",
-      "lastTested": "2026-11-01T12:09:14.377Z",
-      "status": "passed",
-      "metrics": {
-        "buttonsTotal": 8,
-        "buttonsWithActions": 8,
-        "deadButtons": 0,
-        "linksTotal": 12,
-        "linksValid": 12,
-        "nativeAlerts": 0,
-        "contrastCompliant": true,
-        "swrCalls": 2,
-        "modalsTotal": 1
-      },
-      "issues": [],
-      "warnings": [
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_LIGHT_BACKGROUND",
-          "message": "Container has \"bg-white\" without a corresponding \"dark:bg-*\" variant class (sidebar w-64 bg-white border-r border-slate-200 fl).",
-          "snippet": "<div class=\"sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none\">"
-        },
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_DARK_TEXT",
-          "message": "Text has hardcoded dark color without a corresponding \"dark:text-*\" variant (bg-slate-50 text-slate-900 font-sans antialiased m).",
-          "snippet": "<div class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex\">"
-        }
-      ]
-    },
-    "pages/patient-coverages/patient-coverages.html": {
-      "pageName": "Insurance Coverages (COB)",
-      "route": "patient-coverages",
-      "fileHash": "sha256:7ac3a45911a2f030c520a3186dbcbd487246d32376c2a16c6d55282da9d96c1f",
-      "lastModified": "2026-11-01T12:09:14.273Z",
-      "lastTested": "2026-11-01T12:09:14.377Z",
-      "status": "passed",
-      "metrics": {
-        "buttonsTotal": 8,
-        "buttonsWithActions": 8,
-        "deadButtons": 0,
-        "linksTotal": 12,
-        "linksValid": 12,
-        "nativeAlerts": 0,
-        "contrastCompliant": true,
-        "swrCalls": 2,
-        "modalsTotal": 1
-      },
-      "issues": [],
-      "warnings": [
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_LIGHT_BACKGROUND",
-          "message": "Container has \"bg-white\" without a corresponding \"dark:bg-*\" variant class (sidebar w-64 bg-white border-r border-slate-200 fl).",
-          "snippet": "<div class=\"sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none\">"
-        },
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_DARK_TEXT",
-          "message": "Text has hardcoded dark color without a corresponding \"dark:text-*\" variant (bg-slate-50 text-slate-900 font-sans antialiased m).",
-          "snippet": "<div class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex\">"
-        }
-      ]
-    },
-    "pages/referrals-waitlist/referrals-waitlist.html": {
-      "pageName": "Referrals & Smart Waitlist",
-      "route": "referrals-waitlist",
-      "fileHash": "sha256:6bd83c1c63338b2dfa8e2c6f536c1eaaa1f38d84b52698e5182e38be8ca06705",
-      "lastModified": "2026-11-01T12:09:14.273Z",
-      "lastTested": "2026-11-01T12:09:14.377Z",
-      "status": "passed",
-      "metrics": {
-        "buttonsTotal": 8,
-        "buttonsWithActions": 8,
-        "deadButtons": 0,
-        "linksTotal": 12,
-        "linksValid": 12,
-        "nativeAlerts": 0,
-        "contrastCompliant": true,
-        "swrCalls": 2,
-        "modalsTotal": 1
-      },
-      "issues": [],
-      "warnings": [
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_LIGHT_BACKGROUND",
-          "message": "Container has \"bg-white\" without a corresponding \"dark:bg-*\" variant class (sidebar w-64 bg-white border-r border-slate-200 fl).",
-          "snippet": "<div class=\"sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none\">"
-        },
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_DARK_TEXT",
-          "message": "Text has hardcoded dark color without a corresponding \"dark:text-*\" variant (bg-slate-50 text-slate-900 font-sans antialiased m).",
-          "snippet": "<div class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex\">"
-        }
-      ]
-    },
-    "pages/provider-directory/provider-directory.html": {
-      "pageName": "Providers & Credentialing",
-      "route": "provider-directory",
-      "fileHash": "sha256:2779ea54d704324ef73c53a3be212d1f3630a097bedd566a0704303235edcfb6",
-      "lastModified": "2026-11-01T12:09:14.273Z",
-      "lastTested": "2026-11-01T12:09:14.377Z",
-      "status": "passed",
-      "metrics": {
-        "buttonsTotal": 8,
-        "buttonsWithActions": 8,
-        "deadButtons": 0,
-        "linksTotal": 12,
-        "linksValid": 12,
-        "nativeAlerts": 0,
-        "contrastCompliant": true,
-        "swrCalls": 2,
-        "modalsTotal": 1
-      },
-      "issues": [],
-      "warnings": [
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_LIGHT_BACKGROUND",
-          "message": "Container has \"bg-white\" without a corresponding \"dark:bg-*\" variant class (sidebar w-64 bg-white border-r border-slate-200 fl).",
-          "snippet": "<div class=\"sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none\">"
-        },
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_DARK_TEXT",
-          "message": "Text has hardcoded dark color without a corresponding \"dark:text-*\" variant (bg-slate-50 text-slate-900 font-sans antialiased m).",
-          "snippet": "<div class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex\">"
-        }
-      ]
-    },
-    "pages/facilities-rooms/facilities-rooms.html": {
-      "pageName": "Clinics, Rooms & Modalities",
-      "route": "facilities-rooms",
-      "fileHash": "sha256:e78e65a2c764d19cb4b3ac33a4596060a078e4f7a1748ad48f5bd7911f590518",
-      "lastModified": "2026-11-01T12:09:14.273Z",
-      "lastTested": "2026-11-01T12:09:14.377Z",
-      "status": "passed",
-      "metrics": {
-        "buttonsTotal": 8,
-        "buttonsWithActions": 8,
-        "deadButtons": 0,
-        "linksTotal": 12,
-        "linksValid": 12,
-        "nativeAlerts": 0,
-        "contrastCompliant": true,
-        "swrCalls": 2,
-        "modalsTotal": 1
-      },
-      "issues": [],
-      "warnings": [
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_LIGHT_BACKGROUND",
-          "message": "Container has \"bg-white\" without a corresponding \"dark:bg-*\" variant class (sidebar w-64 bg-white border-r border-slate-200 fl).",
-          "snippet": "<div class=\"sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none\">"
-        },
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_DARK_TEXT",
-          "message": "Text has hardcoded dark color without a corresponding \"dark:text-*\" variant (bg-slate-50 text-slate-900 font-sans antialiased m).",
-          "snippet": "<div class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex\">"
-        }
-      ]
-    },
-    "pages/access-analytics/access-analytics.html": {
-      "pageName": "Utilization & No-Show Analytics",
-      "route": "access-analytics",
-      "fileHash": "sha256:e34367c77d69aad64f8b82b1133ef64daa23a459574d9dba37527062ccaf5c68",
-      "lastModified": "2026-11-01T12:09:14.274Z",
-      "lastTested": "2026-11-01T12:09:14.377Z",
-      "status": "passed",
-      "metrics": {
-        "buttonsTotal": 8,
-        "buttonsWithActions": 8,
-        "deadButtons": 0,
-        "linksTotal": 12,
-        "linksValid": 12,
-        "nativeAlerts": 0,
-        "contrastCompliant": true,
-        "swrCalls": 2,
-        "modalsTotal": 1
-      },
-      "issues": [],
-      "warnings": [
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_LIGHT_BACKGROUND",
-          "message": "Container has \"bg-white\" without a corresponding \"dark:bg-*\" variant class (sidebar w-64 bg-white border-r border-slate-200 fl).",
-          "snippet": "<div class=\"sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none\">"
-        },
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_DARK_TEXT",
-          "message": "Text has hardcoded dark color without a corresponding \"dark:text-*\" variant (bg-slate-50 text-slate-900 font-sans antialiased m).",
-          "snippet": "<div class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex\">"
-        }
-      ]
-    },
-    "pages/appointment-detail/appointment-detail.html": {
-      "pageName": "Appointment & Clearance 360",
-      "route": "appointment-detail",
-      "fileHash": "sha256:c38370ca0b7e68756075c08056aa34ea57783a92aef05d4cf9630729c26df339",
-      "lastModified": "2026-11-01T12:09:14.274Z",
-      "lastTested": "2026-11-01T12:09:14.377Z",
-      "status": "passed",
-      "metrics": {
-        "buttonsTotal": 9,
-        "buttonsWithActions": 9,
+        "buttonsTotal": 6,
+        "buttonsWithActions": 6,
         "deadButtons": 0,
         "linksTotal": 14,
         "linksValid": 14,
         "nativeAlerts": 0,
         "contrastCompliant": true,
         "swrCalls": 0,
-        "modalsTotal": 1
+        "modalsTotal": 0
       },
       "issues": [],
-      "warnings": [
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_LIGHT_BACKGROUND",
-          "message": "Container has \"bg-white\" without a corresponding \"dark:bg-*\" variant class (sidebar w-64 bg-white border-r border-slate-200 fl).",
-          "snippet": "<div class=\"sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none\">"
-        },
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_DARK_TEXT",
-          "message": "Text has hardcoded dark color without a corresponding \"dark:text-*\" variant (bg-slate-50 text-slate-900 font-sans antialiased m).",
-          "snippet": "<div class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex\">"
-        }
-      ]
+      "warnings": []
     },
-    "pages/booking-drawer/booking-drawer.html": {
-      "pageName": "Book / Reschedule Appointment",
-      "route": "booking-drawer",
-      "fileHash": "sha256:cd36982c026b072c3e89648a681bdc510c56347c286c9fabd4cfbe2a09b5f46c",
-      "lastModified": "2026-11-01T12:09:14.274Z",
-      "lastTested": "2026-11-01T12:09:14.377Z",
+    "pages/clinic-flow-board/clinic-flow-board.html": {
+      "pageName": "Check-In & Rooming Flow Board",
+      "route": "clinic-flow-board",
+      "fileHash": "sha256:bd3dfe9518657b2edd703a88d7e159d14e026d0bcac5d3c41b43d2f3343d56b3",
+      "lastModified": "2026-11-02T09:49:16.297Z",
+      "lastTested": "2026-11-02T09:49:16.424Z",
       "status": "passed",
       "metrics": {
-        "buttonsTotal": 7,
-        "buttonsWithActions": 7,
+        "buttonsTotal": 6,
+        "buttonsWithActions": 6,
+        "deadButtons": 0,
+        "linksTotal": 14,
+        "linksValid": 14,
+        "nativeAlerts": 0,
+        "contrastCompliant": true,
+        "swrCalls": 0,
+        "modalsTotal": 0
+      },
+      "issues": [],
+      "warnings": []
+    },
+    "pages/eligibility-clearance/eligibility-clearance.html": {
+      "pageName": "Eligibility & Prior Auth Queue",
+      "route": "eligibility-clearance",
+      "fileHash": "sha256:34735ea655266b2ee20201ef8183ef527a5a63a05c9785927b95f46bb38880b5",
+      "lastModified": "2026-11-02T09:49:16.297Z",
+      "lastTested": "2026-11-02T09:49:16.424Z",
+      "status": "passed",
+      "metrics": {
+        "buttonsTotal": 6,
+        "buttonsWithActions": 6,
+        "deadButtons": 0,
+        "linksTotal": 14,
+        "linksValid": 14,
+        "nativeAlerts": 0,
+        "contrastCompliant": true,
+        "swrCalls": 0,
+        "modalsTotal": 0
+      },
+      "issues": [],
+      "warnings": []
+    },
+    "pages/patient-coverages/patient-coverages.html": {
+      "pageName": "Insurance Coverages (COB)",
+      "route": "patient-coverages",
+      "fileHash": "sha256:1e70beafde50a4a0b0a352fc4b4da1a3affeb94258c36fc09ea0a068dc577a35",
+      "lastModified": "2026-11-02T09:49:16.298Z",
+      "lastTested": "2026-11-02T09:49:16.424Z",
+      "status": "passed",
+      "metrics": {
+        "buttonsTotal": 6,
+        "buttonsWithActions": 6,
         "deadButtons": 0,
         "linksTotal": 14,
         "linksValid": 14,
         "nativeAlerts": 0,
         "contrastCompliant": true,
         "swrCalls": 1,
-        "modalsTotal": 1
+        "modalsTotal": 0
+      },
+      "issues": [],
+      "warnings": []
+    },
+    "pages/referrals-waitlist/referrals-waitlist.html": {
+      "pageName": "Referrals & Smart Waitlist",
+      "route": "referrals-waitlist",
+      "fileHash": "sha256:747414bb90bbec3ed48738d498d9935f3a6dd21800d4a2886803340b0a9679ce",
+      "lastModified": "2026-11-02T09:49:16.299Z",
+      "lastTested": "2026-11-02T09:49:16.424Z",
+      "status": "passed",
+      "metrics": {
+        "buttonsTotal": 6,
+        "buttonsWithActions": 6,
+        "deadButtons": 0,
+        "linksTotal": 14,
+        "linksValid": 14,
+        "nativeAlerts": 0,
+        "contrastCompliant": true,
+        "swrCalls": 0,
+        "modalsTotal": 0
+      },
+      "issues": [],
+      "warnings": []
+    },
+    "pages/provider-directory/provider-directory.html": {
+      "pageName": "Providers & Credentialing",
+      "route": "provider-directory",
+      "fileHash": "sha256:9f68974baa6a8567939d67e2ebb156d28e342fc96d0ab5a8576bd93835620037",
+      "lastModified": "2026-11-02T09:49:16.300Z",
+      "lastTested": "2026-11-02T09:49:16.424Z",
+      "status": "passed",
+      "metrics": {
+        "buttonsTotal": 6,
+        "buttonsWithActions": 6,
+        "deadButtons": 0,
+        "linksTotal": 14,
+        "linksValid": 14,
+        "nativeAlerts": 0,
+        "contrastCompliant": true,
+        "swrCalls": 1,
+        "modalsTotal": 0
+      },
+      "issues": [],
+      "warnings": []
+    },
+    "pages/facilities-rooms/facilities-rooms.html": {
+      "pageName": "Clinics, Rooms & Modalities",
+      "route": "facilities-rooms",
+      "fileHash": "sha256:3cabf1a6ddefec6b45cbb046d16742c5d68a96c6b41f564f1fab9b623297cdf2",
+      "lastModified": "2026-11-02T09:49:16.300Z",
+      "lastTested": "2026-11-02T09:49:16.424Z",
+      "status": "passed",
+      "metrics": {
+        "buttonsTotal": 6,
+        "buttonsWithActions": 6,
+        "deadButtons": 0,
+        "linksTotal": 14,
+        "linksValid": 14,
+        "nativeAlerts": 0,
+        "contrastCompliant": true,
+        "swrCalls": 1,
+        "modalsTotal": 0
+      },
+      "issues": [],
+      "warnings": []
+    },
+    "pages/access-analytics/access-analytics.html": {
+      "pageName": "Utilization & No-Show Analytics",
+      "route": "access-analytics",
+      "fileHash": "sha256:f8d09935a8cbfd0531c449411ae08512f873512543c1a41fa56cc99c5c1412d2",
+      "lastModified": "2026-11-02T09:49:16.301Z",
+      "lastTested": "2026-11-02T09:49:16.424Z",
+      "status": "passed",
+      "metrics": {
+        "buttonsTotal": 6,
+        "buttonsWithActions": 6,
+        "deadButtons": 0,
+        "linksTotal": 14,
+        "linksValid": 14,
+        "nativeAlerts": 0,
+        "contrastCompliant": true,
+        "swrCalls": 1,
+        "modalsTotal": 0
+      },
+      "issues": [],
+      "warnings": []
+    },
+    "pages/appointment-detail/appointment-detail.html": {
+      "pageName": "Appointment & Clearance 360",
+      "route": "appointment-detail",
+      "fileHash": "sha256:006fb79f3ae554912c75358651c4fd61abe45d8eaca7fd314b64284b8741f420",
+      "lastModified": "2026-11-02T09:49:16.301Z",
+      "lastTested": "2026-11-02T09:49:16.424Z",
+      "status": "passed",
+      "metrics": {
+        "buttonsTotal": 5,
+        "buttonsWithActions": 5,
+        "deadButtons": 0,
+        "linksTotal": 15,
+        "linksValid": 15,
+        "nativeAlerts": 0,
+        "contrastCompliant": true,
+        "swrCalls": 0,
+        "modalsTotal": 0
+      },
+      "issues": [],
+      "warnings": []
+    },
+    "pages/booking-drawer/booking-drawer.html": {
+      "pageName": "Book / Reschedule Appointment",
+      "route": "booking-drawer",
+      "fileHash": "sha256:256bef8c9487ec812af2fe56a6aa43595d75a94ecf89c4ed1728f8eddae0ed6b",
+      "lastModified": "2026-11-02T09:49:16.302Z",
+      "lastTested": "2026-11-02T09:49:16.424Z",
+      "status": "passed",
+      "metrics": {
+        "buttonsTotal": 9,
+        "buttonsWithActions": 9,
+        "deadButtons": 0,
+        "linksTotal": 13,
+        "linksValid": 13,
+        "nativeAlerts": 0,
+        "contrastCompliant": true,
+        "swrCalls": 1,
+        "modalsTotal": 0
       },
       "issues": [],
       "warnings": [
         {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_LIGHT_BACKGROUND",
-          "message": "Container has \"bg-white\" without a corresponding \"dark:bg-*\" variant class (sidebar w-64 bg-white border-r border-slate-200 fl).",
-          "snippet": "<div class=\"sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none\">"
-        },
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_DARK_TEXT",
-          "message": "Text has hardcoded dark color without a corresponding \"dark:text-*\" variant (bg-slate-50 text-slate-900 font-sans antialiased m).",
-          "snippet": "<div class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex\">"
+          "rule": "Pass 04: Modals Usage (Universal Dismissal)",
+          "type": "MODAL_DISMISSAL_MISSING",
+          "message": "Modal element detected, but script lacks standard backdrop click dismissal or Escape key listener to close active overlays."
         }
       ]
     },
     "pages/checkin-copay-drawer/checkin-copay-drawer.html": {
       "pageName": "Rapid Check-In & Copay Drawer",
       "route": "checkin-copay-drawer",
-      "fileHash": "sha256:3e54702384fb6dbd6b800766f341fea4ae5283793671a0a7943b3bc295ab01dd",
-      "lastModified": "2026-11-01T12:09:14.274Z",
-      "lastTested": "2026-11-01T12:09:14.377Z",
+      "fileHash": "sha256:686debb65b2716c51c757dc269c6d19f0a4f987dad6bb5c33eebdb8dd883ca7a",
+      "lastModified": "2026-11-02T09:49:16.303Z",
+      "lastTested": "2026-11-02T09:49:16.424Z",
       "status": "passed",
       "metrics": {
-        "buttonsTotal": 7,
-        "buttonsWithActions": 7,
+        "buttonsTotal": 9,
+        "buttonsWithActions": 9,
         "deadButtons": 0,
-        "linksTotal": 14,
-        "linksValid": 14,
+        "linksTotal": 13,
+        "linksValid": 13,
         "nativeAlerts": 0,
         "contrastCompliant": true,
         "swrCalls": 1,
-        "modalsTotal": 1
+        "modalsTotal": 0
       },
       "issues": [],
       "warnings": [
         {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_LIGHT_BACKGROUND",
-          "message": "Container has \"bg-white\" without a corresponding \"dark:bg-*\" variant class (sidebar w-64 bg-white border-r border-slate-200 fl).",
-          "snippet": "<div class=\"sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none\">"
-        },
-        {
-          "rule": "Pass 11: Dark & Light Theme Compliance",
-          "type": "HARDCODED_DARK_TEXT",
-          "message": "Text has hardcoded dark color without a corresponding \"dark:text-*\" variant (bg-slate-50 text-slate-900 font-sans antialiased m).",
-          "snippet": "<div class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex\">"
+          "rule": "Pass 04: Modals Usage (Universal Dismissal)",
+          "type": "MODAL_DISMISSAL_MISSING",
+          "message": "Modal element detected, but script lacks standard backdrop click dismissal or Escape key listener to close active overlays."
         }
       ]
     }
@@ -580,6 +436,16 @@
     "suites": []
   },
   "history": [
+    {
+      "timestamp": "2026-11-02T09:49:16.424Z",
+      "action": "qa_full_audit",
+      "commit": "0bdb151",
+      "complianceRate": 100,
+      "pagesAudited": 12,
+      "status": "passed",
+      "agent": "Antigravity",
+      "details": "12/12 pages passed. Completed 20/20 QA passes."
+    },
     {
       "timestamp": "2026-11-01T12:09:14.377Z",
       "action": "qa_full_audit",

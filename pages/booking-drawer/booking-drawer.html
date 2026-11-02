@@ -3,577 +3,551 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book / Reschedule Appointment - Healthcare &amp; Clinical Suite</title>
+  <title>Book / Reschedule Appointment — Rapider Medical Practice Management</title>
   <script src="https://kit.fontawesome.com/5b23df26dc.js" crossorigin="anonymous" defer></script>
   <script src="/assets/js/rapider-components.js" defer></script>
   <link rel="stylesheet" href="/assets/themes/rapider-tailwind-theme.css">
   <link rel="stylesheet" href="/assets/themes/crm-expenses-design.css">
-
   <style>
-    dialog {
-      margin: auto;
-      border: none;
-      padding: 0;
-      background: transparent;
+    :root {
+      --ink: #172137;
+      --muted: #67728a;
+      --line: #e9ecf3;
+      --bg: #f5f6fa;
+      --purple: #6854df;
+      --purple-soft: #f3f0ff;
+      --panel: #ffffff;
+      --dark: #1f243a;
+      --soft: #eeeaff;
+      --green: #16795b;
+      --amber: #b4690e;
+      --red: #b9384f;
+      --radius: 14px;
     }
-    .field input:not([type="checkbox"]):not([type="radio"]),
-    .field select,
-    .field textarea {
-      display: block;
-      width: 100%;
-      min-height: 42px;
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; font: 14px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif; background: var(--bg); color: var(--ink); }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    .btn, button.btn {
+      cursor: pointer; border: 1px solid #dfe3ed; background: #ffffff; color: var(--ink);
+      padding: 8px 14px; border-radius: 9px; font-weight: 600; display: inline-flex;
+      align-items: center; justify-content: center; gap: 7px; font-size: 13px; min-height: 38px;
+      transition: all 0.15s ease;
     }
-    aside.collapsed .sidebar-label, [data-collapsed="true"] .sidebar-label { display: none !important; }
-  </style>
+    .btn:hover { background: #f5f3ff; border-color: #cfc7f4; }
+    .btn.primary, button.primary, a.btn.primary {
+      background: var(--purple) !important; background-color: var(--purple) !important;
+      color: #ffffff !important; border-color: var(--purple) !important;
+      box-shadow: 0 3px 8px rgba(104, 84, 223, 0.22);
+    }
+    .btn.primary:hover, button.primary:hover, a.btn.primary:hover {
+      background: #5844cc !important; color: #ffffff !important;
+    }
+    .btn.danger, button.danger {
+      background: var(--red) !important; color: #ffffff !important; border-color: var(--red) !important;
+    }
+    .btn.small { padding: 5px 10px; min-height: 30px; font-size: 12px; border-radius: 7px; }
+    .btn.icon-only { padding: 6px 9px; min-height: 30px; color: var(--red); border-color: #f1d0d6; background: #fffafb; }
+    .btn.icon-only:hover { background: #fee2e2; }
 
-  <style data-dark-mode-parity>
-    html.dark, body.dark { --ink:#f1f5f9; --muted:#94a3b8; --line:#263044; --bg:#0f172a; --soft:#1e1b4b; background:#0f172a !important; color:#f1f5f9 !important; }
-    html.dark aside, body.dark aside { background: #0f172a !important; border-color: #1e293b !important; }
-    html.dark .bg-white, body.dark .bg-white { background: #1e293b !important; color: #f1f5f9 !important; border-color: #334155 !important; }
-    html.dark .text-slate-900, body.dark .text-slate-900 { color: #f8fafc !important; }
-    html.dark .text-slate-800, body.dark .text-slate-800 { color: #f1f5f9 !important; }
-    html.dark .text-slate-700, body.dark .text-slate-700 { color: #cbd5e1 !important; }
-    html.dark .text-slate-600, body.dark .text-slate-600 { color: #94a3b8 !important; }
-    html.dark .text-slate-500, body.dark .text-slate-500 { color: #64748b !important; }
-    html.dark .border-slate-200, body.dark .border-slate-200 { border-color: #334155 !important; }
-    html.dark .border-slate-100, body.dark .border-slate-100 { border-color: #1e293b !important; }
-    html.dark .bg-slate-50, body.dark .bg-slate-50 { background: #0b1120 !important; }
-    html.dark .bg-slate-100, body.dark .bg-slate-100 { background: #1e293b !important; }
-    html.dark .hover\:bg-slate-50:hover, body.dark .hover\:bg-slate-50:hover { background: #1e293b !important; }
-    html.dark .hover\:bg-slate-100:hover, body.dark .hover\:bg-slate-100:hover { background: #334155 !important; }
-    html.dark input, html.dark select, html.dark textarea { background: #1e293b !important; color: #f8fafc !important; border-color: #334155 !important; }
-    html.dark table thead th { background: #1e293b !important; color: #94a3b8 !important; }
-  </style>
+    .layout { display: grid; grid-template-columns: 236px minmax(0, 1fr); height: 100vh; overflow: hidden; }
+    .sidebar {
+      background: #ffffff; border-right: 1px solid var(--line); padding: 22px 14px 16px;
+      height: 100vh; display: flex; flex-direction: column; overflow-y: auto; z-index: 30;
+    }
+    .brand-row { display: flex; align-items: center; justify-content: space-between; padding: 0 8px 18px; min-height: 34px; }
+    .brand-row .brand { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; letter-spacing: -0.4px; color: var(--ink); flex: 1; min-width: 0; }
+    .suite-icon-container { width: 28px; height: 28px; border-radius: 8px; background: #eee9fb; color: var(--purple); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .suite-icon-container .suite-expand-icon { display: none !important; font-size: 14px; color: var(--purple); }
+    .sidebar-collapse-btn { background: transparent; border: 1px solid transparent; cursor: pointer; padding: 5px 7px; border-radius: 6px; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; }
+    .sidebar-collapse-btn:hover { background: var(--soft); color: var(--purple); border-color: #cfc7f4; }
 
-  <style data-collapsible-sidebar>
-    /* Collapsible Suite Sidebar Styles */
-    .brand-icon-wrap {
-      position: relative;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      cursor: pointer;
-      background: #eeeaff;
-      color: #6854df;
-      transition: background 0.2s;
+    .appbox { padding: 11px 12px; background: #f6f4fc; border: 1px solid #ebe6f8; border-radius: 10px; margin: 0 0 16px; display: flex; gap: 10px; align-items: center; }
+    .appicon { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; background: #e9e3ff; color: var(--purple); flex-shrink: 0; }
+    .appbox b { display: block; font-size: 13px; color: var(--ink); line-height: 1.25; }
+    .appbox small { color: var(--muted); font-size: 11px; display: block; }
+
+    .nav { display: flex; flex-direction: column; gap: 2px; }
+    .navlabel { font-size: 10px; text-transform: uppercase; letter-spacing: 1.4px; font-weight: 700; color: #9ba3b2; margin: 16px 10px 6px; }
+    .nav a, .nav a:link, .nav a:visited {
+      display: flex; align-items: center; gap: 11px; padding: 9px 11px; font-size: 13px;
+      color: #67728a !important; border-radius: 8px; font-weight: 500;
     }
-    .brand-icon-wrap:hover {
-      background: #e0d7fe;
+    .nav a:hover { background: #f8f7fc; color: #172137 !important; }
+    .nav a.active { background: #ede9fb !important; color: #6650ce !important; font-weight: 650; }
+    .nav a .icon { width: 18px; text-align: center; font-size: 14px; color: inherit; flex-shrink: 0; }
+
+    .side-bottom { margin-top: auto; padding-top: 18px; }
+    .profile-link { border-top: 1px solid var(--line); padding: 14px 6px 0; display: flex; align-items: center; gap: 10px; }
+    .avatar-badge { width: 34px; height: 34px; border-radius: 50%; background: #eee8fb; color: #6854df; display: inline-grid; place-items: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+
+    /* Collapsed sidebar state */
+    .layout.sidebar-collapsed { grid-template-columns: 68px minmax(0, 1fr) !important; }
+    aside.sidebar-collapsed, .sidebar.sidebar-collapsed, aside[data-collapsed="true"] {
+      width: 68px !important; min-width: 68px !important; max-width: 68px !important; padding-left: 8px !important; padding-right: 8px !important;
     }
-    .brand-icon-wrap .expand-hint {
-      display: none;
-      position: absolute;
-      inset: 0;
-      align-items: center;
-      justify-content: center;
-      background: #6854df;
-      color: #ffffff;
-      border-radius: 8px;
-    }
-    aside.collapsed:hover .brand-icon-wrap .expand-hint,
-    aside.sidebar-collapsed:hover .brand-icon-wrap .expand-hint {
-      display: flex !important;
-      animation: pulse-caret 1.2s infinite ease-in-out;
-    }
-    aside.collapsed:hover .brand-icon-wrap #suiteIcon,
-    aside.sidebar-collapsed:hover .brand-icon-wrap #suiteIcon {
+    aside.collapsed .sidebar-label, aside[data-collapsed="true"] .sidebar-label, .sidebar-collapsed .sidebar-label,
+    .sidebar-collapsed .suite-title, .sidebar-collapsed .sidebar-collapse-btn, .sidebar-collapsed .navlabel,
+    .sidebar-collapsed .appbox > div:not(.appicon), .sidebar-collapsed .profile-link > div:not(.avatar-badge) {
       display: none !important;
     }
-    @keyframes pulse-caret {
-      0%, 100% { transform: translateX(0); }
-      50% { transform: translateX(2px); }
-    }
-    aside.collapsed, aside.sidebar-collapsed {
-      width: 68px !important;
-    }
-    aside.collapsed .nav-text,
-    aside.collapsed .sidebar-title,
-    aside.collapsed .sidebar-section-title,
-    aside.collapsed .sidebar-user-info,
-    aside.collapsed .suite-badge,
-    aside.sidebar-collapsed .nav-text,
-    aside.sidebar-collapsed .sidebar-title,
-    aside.sidebar-collapsed .sidebar-section-title,
-    aside.sidebar-collapsed .sidebar-user-info,
-    aside.sidebar-collapsed .suite-badge {
-      display: none !important;
-    }
-    aside.collapsed .nav-item,
-    aside.sidebar-collapsed .nav-item {
-      justify-content: center !important;
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-    }
-    aside.collapsed .section-header,
-    aside.sidebar-collapsed .section-header {
-      text-align: center;
-      padding: 4px 0;
-    }
-    aside.collapsed .section-divider,
-    aside.sidebar-collapsed .section-divider {
-      display: block;
-      margin: 8px auto;
-      width: 24px;
-      border-top: 1px solid #e2e8f0;
-    }
+    .sidebar-collapsed .brand-row { justify-content: center !important; padding: 0 0 16px 0 !important; }
+    .sidebar-collapsed .brand-row .brand { justify-content: center !important; flex: none !important; cursor: pointer; gap: 0 !important; }
+    .sidebar.sidebar-collapsed:hover .suite-icon-container .suite-icon { display: none !important; }
+    .sidebar.sidebar-collapsed:hover .suite-icon-container .suite-expand-icon { display: inline-block !important; }
+    .sidebar-collapsed .appbox, .sidebar-collapsed .nav a, .sidebar-collapsed .profile-link { justify-content: center !important; padding-left: 8px !important; padding-right: 8px !important; }
 
-    /* Standardized Navigation Colors (No saturated primary blue) */
-    .sidebar .nav-item {
-      color: #67728a !important;
-      text-decoration: none;
+    /* Main Content & Topbar */
+    .main-col { display: flex; flex-direction: column; height: 100vh; overflow: hidden; min-width: 0; }
+    .topbar {
+      height: 64px; flex-shrink: 0; border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px; gap: 14px; position: sticky; top: 0; z-index: 25;
     }
-    .sidebar .nav-item:hover {
-      background: #f8fafc !important;
-      color: #1e293b !important;
-    }
-    .sidebar .nav-item.active {
-      background: #f3f0ff !important;
-      color: #53389e !important;
-      font-weight: 600 !important;
-    }
-    .sidebar .nav-item i {
-      color: #67728a;
-    }
-    .sidebar .nav-item.active i {
-      color: #53389e !important;
-    }
+    .breadcrumbs { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .breadcrumbs strong { color: var(--ink); font-weight: 600; }
+    .page-scroll { flex: 1; overflow-y: auto; padding: 26px 30px 44px; }
+    .page-wrap { max-width: 1520px; margin: 0 auto; }
 
-    /* Mobile Responsive Sidebar & Top Navigation Standard */
-    .mobile-menu {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      background: transparent;
-      border: 1px solid rgba(0,0,0,0.08);
-      color: #67728a;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-    .mobile-menu:hover {
-      background: #f8fafc;
-      color: #1e293b;
-    }
-    .shade {
-      display: none;
-    }
+    .eyebrow { font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--purple); font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 7px; }
+    .page-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; margin-bottom: 22px; flex-wrap: wrap; }
+    .page-head h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.6px; margin: 0 0 6px; color: var(--ink); }
+    .page-head p { color: var(--muted); font-size: 13px; margin: 0; max-width: 780px; }
 
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 22px; }
+    .kpi-card { background: #ffffff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; }
+    .kpi-card .kicker { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); display: flex; align-items: center; justify-content: space-between; }
+    .kpi-card .val { font-size: 27px; font-weight: 750; letter-spacing: -0.8px; color: var(--ink); line-height: 1.15; }
+    .kpi-card .sub { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; margin-top: 2px; flex-wrap: wrap; }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-bottom: 20px; }
+    .panel { background: #ffffff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-bottom: 20px; }
+    .panel-head, .panel-header { padding: 16px 20px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .panel-head h2, .panel-header h2 { font-size: 15px; font-weight: 700; margin: 0; color: var(--ink); }
+    .panel-head p, .panel-header p { font-size: 12px; color: var(--muted); margin: 2px 0 0; }
+    .panel-body { padding: 20px; }
+
+    .filter-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 14px 20px; border-bottom: 1px solid var(--line); background: #fafbfe; }
+    .search-input, .form-input, .form-select, .form-textarea { flex: 1; min-width: 180px; padding: 8px 12px; border: 1px solid #dfe3ed; border-radius: 8px; font-size: 13px; background: #fff; color: var(--ink); width: 100%; }
+    .search-wrap .search-input { padding-left: 34px; }
+    .search-wrap { position: relative; flex: 1; min-width: 220px; }
+    .search-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 12px; }
+    .select-filter { padding: 8px 12px; border: 1px solid #dfe3ed; border-radius: 8px; font-size: 13px; background: #fff; color: var(--ink); }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label { font-size: 12px; font-weight: 600; color: var(--ink); }
+    .form-textarea { min-height: 90px; resize: vertical; }
+
+    .active-tags-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 20px; background: #f6f4fc; border-bottom: 1px solid #ebe6f8; font-size: 12px; }
+    .filter-chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: #ffffff; border: 1px solid #d8d0f8; color: #5340b8; font-weight: 600; font-size: 11px; white-space: nowrap; }
+    .filter-chip button { border: 0; background: transparent; color: #6854df; cursor: pointer; padding: 0 2px; font-weight: 700; }
+
+    table.data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+    table.data-table th { padding: 11px 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); background: #f8f9fc; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    table.data-table td { padding: 13px 16px; border-bottom: 1px solid #eff1f6; vertical-align: middle; }
+    table.data-table tr:hover td { background: #fcfbff; }
+    .primary-link { font-weight: 700; color: var(--purple); text-decoration: none; }
+    .primary-link:hover { text-decoration: underline; }
+
+    .badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 650; white-space: nowrap; flex-shrink: 0; }
+    .badge.green { background: #e6f6f0; color: #146c52; }
+    .badge.purple { background: #eee9fb; color: #5b45c4; }
+    .badge.amber { background: #fef3c7; color: #9a580a; }
+    .badge.red { background: #fee2e2; color: #991b1b; }
+    .badge.slate { background: #f1f5f9; color: #475569; }
+    .badge.blue { background: #e0f2fe; color: #0369a1; }
+
+    .floor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+    .table-tile { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: #fff; display: flex; flex-direction: column; gap: 8px; }
+    .tile-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .tile-num { font-weight: 700; font-size: 14px; }
+    .tile-meta { font-size: 11px; color: var(--muted); }
+
+    .kanban-board { display: grid; grid-template-columns: repeat(4, minmax(230px, 1fr)); gap: 14px; overflow-x: auto; }
+    .kanban-col { background: #f8f9fc; border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+    .kanban-col-head { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: var(--ink); padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+    .kanban-card { background: #ffffff; border: 1px solid var(--line); border-radius: 10px; padding: 12px; font-size: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.03); }
+    .kanban-card p { margin: 6px 0; color: var(--muted); font-size: 12px; }
+    .card-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); font-size: 11px; color: var(--muted); }
+
+    .drawer-backdrop { display: flex; justify-content: center; padding: 10px 0; }
+    .drawer-card { background: #ffffff; border: 1px solid var(--line); border-radius: var(--radius); width: 100%; max-width: 820px; overflow: hidden; box-shadow: 0 12px 32px rgba(15,23,42,0.08); }
+    .drawer-head { padding: 18px 22px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+    .drawer-body { padding: 22px; }
+    .drawer-foot { padding: 16px 22px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 10px; background: #fafbfe; }
+
+    .mobile-menu { display: none; background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+    .shade { display: none; }
+
+    @media (max-width: 1024px) {
+      .kpi-grid, .grid-2, .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
     @media (max-width: 768px) {
-      .mobile-menu {
-        display: inline-flex !important;
-      }
-      body {
-        flex-direction: column !important;
-      }
-      aside.sidebar, aside#suiteSidebar, aside {
-        position: fixed !important;
-        left: 0 !important;
-        top: 0 !important;
-        bottom: 0 !important;
-        height: 100vh !important;
-        height: 100dvh !important;
-        width: 260px !important;
-        min-width: 260px !important;
-        max-width: 260px !important;
-        transform: translateX(-100%) !important;
-        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        z-index: 50 !important;
-        background: #ffffff !important;
-        box-shadow: none !important;
-      }
-      body.dark aside.sidebar, html.dark aside.sidebar,
-      body.dark aside#suiteSidebar, html.dark aside#suiteSidebar {
-        background: #0f172a !important;
-      }
-      .navopen aside.sidebar, body.navopen aside.sidebar, html.navopen aside.sidebar,
-      .navopen aside#suiteSidebar, body.navopen aside#suiteSidebar, html.navopen aside#suiteSidebar {
-        transform: translateX(0) !important;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2) !important;
-      }
-      .navopen .shade, body.navopen .shade, html.navopen .shade {
-        display: block !important;
-        position: fixed !important;
-        inset: 0 !important;
-        background: rgba(15, 23, 42, 0.5) !important;
-        backdrop-filter: blur(2px) !important;
-        z-index: 45 !important;
-      }
-      #collapseBtn, .sidebar-collapse-btn {
-        display: none !important;
-      }
+      .layout { display: block; }
+      .sidebar { position: fixed; left: 0; top: 0; transform: translateX(-100%); width: 250px !important; transition: transform 0.2s ease; z-index: 60; }
+      body.navopen .sidebar { transform: translateX(0); }
+      body.navopen .shade { display: block; position: fixed; inset: 0; background: rgba(15,23,42,0.45); z-index: 55; }
+      .mobile-menu { display: inline-flex; align-items: center; justify-content: center; }
+      .kpi-grid, .grid-2, .form-grid { grid-template-columns: 1fr; }
     }
+
+    html.dark, body.dark { --ink: #f1f5f9; --muted: #94a3b8; --line: #263044; --bg: #0f172a; --panel: #1e293b; --purple-soft: #1e1b4b; background: #0f172a !important; color: #f1f5f9 !important; }
+    html.dark .sidebar, body.dark .sidebar, html.dark .topbar, body.dark .topbar, html.dark .panel, body.dark .panel, html.dark .kpi-card, body.dark .kpi-card, html.dark .table-tile, body.dark .table-tile, html.dark .kanban-card, body.dark .kanban-card, html.dark .drawer-card, body.dark .drawer-card { background: #1e293b !important; color: #f1f5f9 !important; border-color: #334155 !important; }
+    html.dark .appbox, body.dark .appbox, html.dark .filter-bar, body.dark .filter-bar, html.dark table.data-table th, body.dark table.data-table th, html.dark .kanban-col, body.dark .kanban-col, html.dark .drawer-foot, body.dark .drawer-foot { background: #0f172a !important; color: #cbd5e1 !important; border-color: #334155 !important; }
+    html.dark input, body.dark input, html.dark select, body.dark select, html.dark textarea, body.dark textarea { background: #0f172a !important; color: #f1f5f9 !important; border-color: #334155 !important; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex">
-
-
-    <!-- Collapsible Left Sidebar -->
-    <aside id="suiteSidebar" class="sidebar w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none" data-collapsible-sidebar="true">
-      <div>
-        <!-- Top Brand Header with Suite Icon & Collapse Toggle -->
-        <div class="h-16 border-b border-slate-200 flex items-center justify-between px-4">
-          <div class="flex items-center gap-3 overflow-hidden">
-            <div id="brandIconWrap" class="brand-icon-wrap" onclick="toggleSidebar()" title="Click to collapse / expand">
-              <i id="suiteIcon" class="fas fa-heart-pulse text-indigo-600 text-lg"></i>
-              <div class="expand-hint">
-                <i class="fas fa-chevron-right text-xs"></i>
-              </div>
-            </div>
-            <div class="sidebar-title truncate">
-              <span class="block text-xs font-semibold uppercase tracking-wider text-indigo-600">Healthcare &amp; Clinical Suite</span>
-              <span class="block text-sm font-bold text-slate-900 leading-tight">Medical Practice Management</span>
-            </div>
-          </div>
-          <button id="collapseBtn" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition-colors" title="Collapse sidebar">
-            <i class="fas fa-chevron-left text-sm"></i>
-          </button>
-        </div>
-
-        <!-- Navigation Sections -->
-        <nav class="py-2">
-          
-        <div class="px-4 mt-4">
-          <p class="sidebar-section-title text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Scheduling &amp; Flow</p>
-          <div class="section-divider hidden"></div>
-          <div class="space-y-1">
-      
-          <a href="#/practice-command" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors active bg-[#f3f0ff] !bg-[#f3f0ff] text-[#53389e] !text-[#53389e] font-semibold">
-            <i class="fas fa-layer-group text-base w-5 text-center text-[#53389e]"></i>
-            <span class="nav-text sidebar-label">Practice Operations Command</span>
-          </a>
-        
-          <a href="#/schedule-calendar" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-table-columns text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Multi-Resource Calendar</span>
-          </a>
-        
-          <a href="#/clinic-flow-board" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-chart-line text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Check-In &amp; Rooming Flow Board</span>
-          </a>
-        
-          </div>
-        </div>
-      
-        <div class="px-4 mt-6">
-          <p class="sidebar-section-title text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Access &amp; Clearance</p>
-          <div class="section-divider hidden"></div>
-          <div class="space-y-1">
-      
-          <a href="#/eligibility-clearance" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-compass text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Eligibility &amp; Prior Auth Queue</span>
-          </a>
-        
-          <a href="#/patient-coverages" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-bolt text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Insurance Coverages (COB)</span>
-          </a>
-        
-          <a href="#/referrals-waitlist" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-shield-halved text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Referrals &amp; Smart Waitlist</span>
-          </a>
-        
-          </div>
-        </div>
-      
-        <div class="px-4 mt-6">
-          <p class="sidebar-section-title text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Resources &amp; Operations</p>
-          <div class="section-divider hidden"></div>
-          <div class="space-y-1">
-      
-          <a href="#/provider-directory" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-sliders text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Providers &amp; Credentialing</span>
-          </a>
-        
-          <a href="#/facilities-rooms" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-clipboard-check text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Clinics, Rooms &amp; Modalities</span>
-          </a>
-        
-          <a href="#/access-analytics" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-[#67728a] hover:bg-slate-100 hover:text-slate-900">
-            <i class="fas fa-diagram-project text-base w-5 text-center text-[#67728a]"></i>
-            <span class="nav-text sidebar-label">Utilization &amp; No-Show Analytics</span>
-          </a>
-        
-          </div>
-        </div>
-      
-        </nav>
+<body>
+  <div class="shade" id="mobileShade"></div>
+  <div class="layout" id="appLayout">
+    <aside class="sidebar" id="appSidebar" aria-label="Rapider Medical Practice Management navigation">
+      <div class="brand-row">
+        <a class="brand" href="#/practice-command" id="suiteBrandLink" title="Healthcare Suite">
+          <span class="suite-icon-container">
+            <i class="suite-icon fas fa-heartbeat" aria-hidden="true"></i>
+            <i class="suite-expand-icon fas fa-chevron-right" aria-hidden="true"></i>
+          </span>
+          <span class="suite-title sidebar-label">Healthcare Suite</span>
+        </a>
+        <button type="button" class="sidebar-collapse-btn" id="sidebarCollapseBtn" aria-label="Collapse sidebar" title="Collapse sidebar">
+          <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        </button>
       </div>
 
-      <!-- Bottom User / Org Card -->
-      <div class="p-4 border-t border-slate-200">
-        <div class="flex items-center gap-3 overflow-hidden">
-          <div class="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 font-semibold flex items-center justify-center shrink-0 text-sm">
-            HL
-          </div>
-          <div class="sidebar-user-info truncate">
-            <p class="text-xs font-semibold text-slate-800 truncate">Dr. Sarah Jenkins</p>
-            <p class="text-[11px] text-slate-500 truncate">Chief Medical Officer</p>
+      <a class="appbox" href="#/practice-command">
+        <div class="appicon"><i class="fas fa-heartbeat" aria-hidden="true"></i></div>
+        <div class="sidebar-label">
+          <b>Medical Practice Management</b>
+          <small>Rapider Healthcare Suite</small>
+        </div>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+      <div class="navlabel">Scheduling &amp; Flow</div>
+        <a href="#/practice-command" class="nav-link" data-route="practice-command" title="Practice Operations Command">
+          <i class="fas fa-heartbeat icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Practice Operations Command</span>
+        </a>
+        <a href="#/schedule-calendar" class="nav-link" data-route="schedule-calendar" title="Multi-Resource Calendar">
+          <i class="fas fa-heartbeat icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Multi-Resource Calendar</span>
+        </a>
+        <a href="#/clinic-flow-board" class="nav-link" data-route="clinic-flow-board" title="Check-In &amp; Rooming Flow Board">
+          <i class="fas fa-heartbeat icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Check-In &amp; Rooming Flow Board</span>
+        </a>
+      <div class="navlabel">Access &amp; Clearance</div>
+        <a href="#/eligibility-clearance" class="nav-link" data-route="eligibility-clearance" title="Eligibility &amp; Prior Auth Queue">
+          <i class="fas fa-heartbeat icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Eligibility &amp; Prior Auth Queue</span>
+        </a>
+        <a href="#/patient-coverages" class="nav-link" data-route="patient-coverages" title="Insurance Coverages (COB)">
+          <i class="fas fa-heartbeat icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Insurance Coverages (COB)</span>
+        </a>
+        <a href="#/referrals-waitlist" class="nav-link" data-route="referrals-waitlist" title="Referrals &amp; Smart Waitlist">
+          <i class="fas fa-heartbeat icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Referrals &amp; Smart Waitlist</span>
+        </a>
+      <div class="navlabel">Resources &amp; Operations</div>
+        <a href="#/provider-directory" class="nav-link" data-route="provider-directory" title="Providers &amp; Credentialing">
+          <i class="fas fa-heartbeat icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Providers &amp; Credentialing</span>
+        </a>
+        <a href="#/facilities-rooms" class="nav-link" data-route="facilities-rooms" title="Clinics, Rooms &amp; Modalities">
+          <i class="fas fa-heartbeat icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Clinics, Rooms &amp; Modalities</span>
+        </a>
+        <a href="#/access-analytics" class="nav-link" data-route="access-analytics" title="Utilization &amp; No-Show Analytics">
+          <i class="fas fa-heartbeat icon" aria-hidden="true"></i>
+          <span class="sidebar-label">Utilization &amp; No-Show Analytics</span>
+        </a>
+      </nav>
+
+      <div class="side-bottom">
+        <div class="profile-link">
+          <div class="avatar-badge">EV</div>
+          <div class="sidebar-label">
+            <strong style="font-size:12px;display:block">Elena Vance</strong>
+            <small style="font-size:11px;color:var(--muted)">Financial Clearance &amp; Prior-Auth Specialist</small>
           </div>
         </div>
       </div>
     </aside>
-    <div class="shade" id="sidebar-shade"></div>
-    
-<div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
-  
-    <!-- Responsive Main Header (h-16 standard) -->
-    <header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between shrink-0">
-      <div class="flex items-center gap-3">
-        <button type="button" class="mobile-menu" data-action="menu" aria-label="Open navigation" aria-expanded="false" title="Open navigation">
-          <i class="fas fa-bars"></i>
-        </button>
-        <nav class="text-xs flex items-center gap-1.5">
-          <a href="#/practice-command" class="hover:text-indigo-600 text-slate-500">Healthcare &amp; Clinical Suite</a>
-          <span class="text-slate-400">/</span>
-          <a href="#/practice-command" class="hover:text-indigo-600 text-slate-500">Medical Practice Management</a>
-          <span class="text-slate-400">/</span>
-          <a href="#/practice-command" class="hover:text-indigo-600 text-slate-500">Workspace</a> <span class="text-slate-400">/</span> <span class="text-slate-900 font-medium">Book / Reschedule Appointment</span>
-        </nav>
-      </div>
-      <div class="flex items-center gap-3">
-        <button onclick="window.rapiderApi.navigate('/booking-drawer')" class="btn-primary flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-sm font-medium transition-colors shadow-sm" style="color: #ffffff !important;">
-          <i class="fas fa-plus"></i>
-          <span>New Record</span>
-        </button>
-        <button onclick="toggleDarkMode()" class="text-slate-500 hover:text-slate-700 p-2 rounded-lg hover:bg-slate-100 transition-colors" title="Toggle Theme">
-          <i class="fas fa-moon text-sm"></i>
-        </button>
-      </div>
-    </header>
-    
-  <main class="flex-1 overflow-y-auto p-6 bg-slate-50 dark:bg-slate-900" id="main-content">
-    
-    <div class="max-w-2xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 lg:p-8">
-      <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-700 mb-6">
-        <div>
-          <span class="text-xs font-semibold uppercase tracking-wider text-indigo-600">Front Desk Check In Configuration</span>
-          <h1 class="text-xl font-bold text-slate-900 dark:text-white mt-0.5">Book / Reschedule Appointment</h1>
-          <p class="text-xs text-slate-500 mt-1">Sliding drawer for single or recurring series booking, conflict &amp; credential check, telehealth toggle, &lt;rapider-phone-input&gt; callback verification, finally button reset, auto-close on Save/Cancel.</p>
-        </div>
-        <a href="#/practice-command" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg" title="Close Drawer">
-          <i class="fas fa-times text-lg"></i>
-        </a>
-      </div>
 
-      <form id="drawerEntityForm" class="space-y-5" onsubmit="handleDrawerSubmit(event)">
-        <div class="field">
-          <label for="inputPrimaryField" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">checkInRef <span class="text-red-500">*</span></label>
-          <input type="text" id="inputPrimaryField" required placeholder="Enter checkInRef..." value="Front Desk Check In checkInRef configuration (1)" class="px-3.5 py-2.5 border border-slate-300 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-indigo-500" />
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="field">
-            <label for="inputSecondaryField" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">photoIdVerified</label>
-            <input type="text" id="inputSecondaryField" placeholder="Enter photoIdVerified..." value="true" class="px-3.5 py-2.5 border border-slate-300 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-indigo-500" />
-          </div>
-          <div class="field">
-            <label for="inputStatusSelect" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Lifecycle Status</label>
-            <select id="inputStatusSelect" class="px-3.5 py-2.5 border border-slate-300 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-indigo-500">
-              <option value="ACTIVE">ACTIVE</option>
-              <option value="IN_PROGRESS">IN_PROGRESS</option>
-              <option value="COMPLETED">COMPLETED</option>
-            </select>
+    <div class="main-col">
+      <header class="topbar h-16 sticky top-0 z-30 flex items-center justify-between px-6 border-b border-border-color bg-background/95 backdrop-blur">
+        <div class="flex items-center gap-3 min-w-0">
+          <button type="button" class="mobile-menu" id="mobileMenuBtn" aria-label="Open menu">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+          </button>
+          <div class="breadcrumbs">
+            <span>Healthcare Suite</span>
+            <span>/</span>
+            <span>Medical Practice Management</span>
+            <span>/</span>
+            <strong>Book / Reschedule Appointment</strong>
           </div>
         </div>
-
-        <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end gap-3">
-          <a href="#/practice-command" class="px-4 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">Cancel</a>
-          <button id="drawerSaveBtn" type="submit" class="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-sm font-semibold transition-colors shadow-sm" style="color: #ffffff !important;">
-            Save Front Desk Check In
+        <div class="flex items-center gap-2">
+          <a href="#/checkin-copay-drawer" class="btn small"><i class="fas fa-plus" aria-hidden="true"></i> + Quick Action</a>
+          <a href="#/booking-drawer" class="btn primary small !text-white text-white" style="color: #ffffff !important;"><i class="fas fa-plus-circle" aria-hidden="true"></i> + New Provider Profile</a>
+          <button type="button" class="btn small" id="themeToggleBtn" aria-label="Toggle dark mode" title="Toggle theme">
+            <i class="fas fa-moon" aria-hidden="true"></i>
           </button>
         </div>
-      </form>
+      </header>
+
+      <main class="page-scroll flex-1 overflow-y-auto p-6 md:p-8 @container" id="main-content">
+        <div class="page-wrap">
+
+        <div class="drawer-backdrop">
+          <div class="drawer-card" role="dialog" aria-labelledby="drawerTitle_10">
+            <div class="drawer-head">
+              <div>
+                <div class="eyebrow"><i class="fas fa-heartbeat"></i> HEALTHCARE SUITE &bull; APPOINTMENT SLOT WORKFLOW DRAWER</div>
+                <h2 id="drawerTitle_10" style="margin:0;font-size:18px;">Book / Reschedule Appointment</h2>
+                <p style="margin:4px 0 0;font-size:12px;color:var(--muted);">Sliding drawer for single or recurring series booking, conflict &amp; credential check, telehealth toggle, &lt;rapider-phone-input&gt; callback verification, finally button reset, auto-close on Save/Cancel.</p>
+              </div>
+              <button type="button" class="btn icon-only" onclick="closePageDrawer('schedule-calendar')" aria-label="Close Drawer" title="Close Drawer"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="drawerForm_10" data-save-form onsubmit="submitDrawer_10(event)">
+              <div class="drawer-body">
+                <div class="form-grid">
+                  <div class="form-group full">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                      <label class="form-label" for="fTitle_10">Appointment Slot Title / Summary *</label>
+                      <button type="button" class="btn small" onclick="autofillAi_10()"><i class="fas fa-magic" style="color:var(--purple)"></i> AI Copilot Auto-Draft</button>
+                    </div>
+                    <input type="text" id="fTitle_10" class="form-input" required placeholder="Enter Appointment Slot title or reference...">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="fColA_10">Template Name</label>
+                    <input type="text" id="fColA_10" class="form-input" value="HLT-2026-110" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="fStatus_10">Lifecycle Stage (`status`)</label>
+                    <select id="fStatus_10" class="form-select">
+                      <option value="NEW_PATIENT">NEW_PATIENT</option><option value="ESTABLISHED_FOLLOWUP">ESTABLISHED_FOLLOWUP</option><option value="SAME_DAY_ACUTE">SAME_DAY_ACUTE</option><option value="PROCEDURE">PROCEDURE</option><option value="TELEHEALTH">TELEHEALTH</option><option value="ANY">ANY</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="fColB_10">Slot Date</label>
+                    <input type="text" id="fColB_10" class="form-input" value="Primary Appointment Slot Tier">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="fColC_10">Start Time Utc (`Decimal128`)</label>
+                    <input type="text" id="fColC_10" class="form-input" value="250.00">
+                  </div>
+                  <div class="form-group full">
+                    <label class="form-label"> Escalation &amp; SMS Alert Contact (`<rapider-phone-input>`)</label>
+                    <rapider-phone-input value="+1 (415) 555-0142" input-id="fPhone_10"></rapider-phone-input>
+                  </div>
+                  <div class="form-group full">
+                    <label class="form-label" for="fNotes_10">Operational Context &amp; Invariant Notes</label>
+                    <textarea id="fNotes_10" class="form-textarea" required placeholder="Specify domain parameters and cross-suite verification notes...">bookedCount &lt;= maxBookings; isBlockedTimeOff == true blocks new bookings automatically when synced from HrTimeOffRequest.</textarea>
+                  </div>
+                  <div class="form-group full" style="padding:12px;border-radius:10px;background:var(--purple-soft);border:1px solid var(--line);font-size:12px;">
+                    <strong><i class="fas fa-shield-alt"></i> SOW Invariant &amp; Optimistic Concurrency Gate (`HltAppointmentSlot`):</strong>
+                    <div style="margin-top:4px;">bookedCount &lt;= maxBookings; isBlockedTimeOff == true blocks new bookings automatically when synced from HrTimeOffRequest.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="drawer-foot">
+                <button type="button" class="btn" onclick="closePageDrawer('schedule-calendar')">Cancel</button>
+                <button type="submit" id="saveBtn_10" class="btn primary !text-white text-white" style="color:#ffffff !important;"><i class="fas fa-check-circle"></i> Save Appointment Slot</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      
+        </div>
+      </main>
     </div>
-    
-  </main>
-</div>
+  </div>
 
-    <!-- Rapider Custom Confirm Modal (Zero Native alert/confirm) -->
-    <dialog id="rapiderConfirmModal" class="rounded-xl p-0 shadow-2xl backdrop:bg-slate-900/40 w-full max-w-md">
-      <div class="bg-white rounded-xl overflow-hidden border border-slate-200">
-        <div class="p-6">
-          <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-4">
-            <i class="fas fa-triangle-exclamation text-xl"></i>
-          </div>
-          <h3 id="rapiderConfirmTitle" class="text-lg font-bold text-slate-900 mb-2">Confirm Action</h3>
-          <p id="rapiderConfirmMessage" class="text-sm text-slate-600">Are you sure you want to proceed? This action cannot be undone.</p>
-        </div>
-        <div class="bg-slate-50 px-6 py-3 flex justify-end gap-3 border-t border-slate-100">
-          <button id="rapiderConfirmCancelBtn" type="button" class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
-            Cancel
-          </button>
-          <button id="rapiderConfirmOkBtn" type="button" class="px-4 py-2 text-sm font-medium rounded-lg bg-red-600 hover:bg-red-700 transition-colors" style="color: #ffffff !important;">
-            Confirm Delete
-          </button>
-        </div>
+  <!-- Confirmation Modal (Zero Native Dialog Standard) -->
+  <div id="rapiderConfirmModal" class="hidden" style="position:fixed;inset:0;background:rgba(15,23,42,0.5);z-index:100;display:none;align-items:center;justify-content:center;padding:16px;">
+    <div class="panel" style="max-width:420px;width:100%;padding:22px;box-shadow:0 20px 50px rgba(15,23,42,0.25);margin:0;">
+      <h3 id="rapiderConfirmTitle" style="margin:0 0 8px;font-size:17px;font-weight:700;">Confirm Action</h3>
+      <p id="rapiderConfirmMsg" style="margin:0 0 18px;font-size:13px;color:var(--muted);"></p>
+      <div style="display:flex;justify-content:flex-end;gap:10px;">
+        <button type="button" class="btn" id="rapiderConfirmCancelBtn">Cancel</button>
+        <button type="button" class="btn danger !text-white text-white" id="rapiderConfirmOkBtn" style="color:#ffffff !important;">Confirm Remove</button>
       </div>
-    </dialog>
-    
+    </div>
+  </div>
+  <!-- Empty State Fallback Template (Pass 14) -->
+  <div id="emptyStateContainer" class="empty-state hidden" style="display:none;">No records found</div>
 
-    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
-    
-
-    <script>
-      function toggleSidebar() {
-        const aside = document.getElementById('suiteSidebar');
-        if (!aside) return;
-        const isCollapsed = aside.classList.toggle('collapsed');
-        aside.classList.toggle('sidebar-collapsed', isCollapsed);
-        localStorage.setItem('rapider_sidebar_collapsed', isCollapsed ? 'true' : 'false');
-        const collapseBtn = document.getElementById('collapseBtn');
-        if (collapseBtn) {
-          collapseBtn.innerHTML = isCollapsed
-            ? '<i class="fas fa-chevron-right text-sm"></i>'
-            : '<i class="fas fa-chevron-left text-sm"></i>';
-          collapseBtn.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
-        }
-      }
-
-      document.addEventListener('DOMContentLoaded', () => {
-        const aside = document.getElementById('suiteSidebar');
-        if (aside) {
-          aside.addEventListener('click', (e) => {
-            if (aside.classList.contains('collapsed') || aside.classList.contains('sidebar-collapsed')) {
-              if (e.target.closest('#brandIconWrap') || e.target.closest('.brand-icon-wrap') || e.target.closest('.expand-hint')) {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleSidebar();
-              }
-            }
-          });
-        }
-
-        document.querySelectorAll('.mobile-menu, [data-action="menu"]').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const isOpen = document.body.classList.toggle('navopen');
-            btn.setAttribute('aria-expanded', String(isOpen));
-          });
-        });
-
-        const shade = document.getElementById('sidebar-shade') || document.querySelector('.shade');
-        if (shade) {
-          shade.addEventListener('click', () => {
-            document.body.classList.remove('navopen');
-            document.querySelectorAll('.mobile-menu, [data-action="menu"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
-          });
-        }
-
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && document.body.classList.contains('navopen')) {
-            document.body.classList.remove('navopen');
-            document.querySelectorAll('.mobile-menu, [data-action="menu"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
-          }
-        });
-
-        if (localStorage.getItem('rapider_sidebar_collapsed') === 'true') {
-          if (aside) {
-            aside.classList.add('collapsed');
-            aside.classList.add('sidebar-collapsed');
-            const collapseBtn = document.getElementById('collapseBtn');
-            if (collapseBtn) {
-              collapseBtn.innerHTML = '<i class="fas fa-chevron-right text-sm"></i>';
-              collapseBtn.title = 'Expand sidebar';
-            }
-          }
-        }
-      });
-
-      function toggleDarkMode() {
-        document.documentElement.classList.toggle('dark');
-        document.body.classList.toggle('dark');
-      }
-
-      function showToast(title, message = '', type = 'info') {
-        const container = document.getElementById('toastContainer');
-        if (!container) return;
-        const toast = document.createElement('div');
-        const bg = type === 'success' ? 'bg-emerald-600' : type === 'danger' ? 'bg-red-600' : 'bg-slate-800';
-        toast.className = bg + ' text-white text-sm px-4 py-3 rounded-lg shadow-lg pointer-events-auto flex items-center gap-3 transition-opacity duration-300';
-        toast.style.color = '#ffffff';
-        toast.innerHTML = '<i class="fas fa-circle-info"></i><div><strong class="font-medium block">' + title + '</strong><span class="text-xs text-slate-200">' + message + '</span></div>';
-        container.appendChild(toast);
-        setTimeout(() => {
-          toast.style.opacity = '0';
-          setTimeout(() => toast.remove(), 300);
-        }, 3500);
-      }
-
-      function showConfirmModal(title, message, onConfirm) {
-        const modal = document.getElementById('rapiderConfirmModal');
-        const titleEl = document.getElementById('rapiderConfirmTitle');
-        const msgEl = document.getElementById('rapiderConfirmMessage');
-        const okBtn = document.getElementById('rapiderConfirmOkBtn');
-        const cancelBtn = document.getElementById('rapiderConfirmCancelBtn');
-
-        if (!modal) return;
-        if (titleEl) titleEl.textContent = title;
-        if (msgEl) msgEl.textContent = message;
-
-        const cleanup = () => {
-          okBtn.onclick = null;
-          cancelBtn.onclick = null;
-          modal.close();
-        };
-
-        okBtn.onclick = () => {
-          cleanup();
-          if (typeof onConfirm === 'function') onConfirm();
-        };
-        cancelBtn.onclick = () => {
-          cleanup();
-        };
-
-        modal.showModal();
-      }
-    </script>
-    
-<script>
-    async function handleDrawerSubmit(e) {
-      e.preventDefault();
-      const saveBtn = document.getElementById('drawerSaveBtn');
-      const v1 = document.getElementById('inputPrimaryField').value.trim();
-      const v2 = document.getElementById('inputSecondaryField').value.trim();
-      const st = document.getElementById('inputStatusSelect').value;
-
-      if (!v1) {
-        showToast('Validation Error', 'Primary field is required.', 'danger');
+  <script>
+    window.esc = function(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+    window.toast = function(message, type) {
+      if (window.rapiderApi && typeof window.rapiderApi.showNotification === 'function') {
+        window.rapiderApi.showNotification({ type: type || 'success', message: message });
         return;
       }
-
-      if (saveBtn) saveBtn.disabled = true;
-      try {
-        const payload = {
-          "checkInRef": v1,
-          "photoIdVerified": v2,
-          status: st,
-          isDeleted: false
-        };
-        await window.rapiderApi.createEntity('HltFrontDeskCheckIn', payload);
-        showToast('Saved Successfully', 'Front Desk Check In record has been saved.', 'success');
-        setTimeout(() => {
-          window.location.hash = '#/practice-command';
-        }, 450);
-      } catch (err) {
-        showToast('Saved Successfully', 'Front Desk Check In record updated in workspace.', 'success');
-        setTimeout(() => {
-          window.location.hash = '#/practice-command';
-        }, 450);
-      } finally {
-        if (saveBtn) saveBtn.disabled = false;
+      var el = document.createElement('div');
+      el.style.cssText = 'position:fixed;bottom:22px;right:22px;background:#1f243a;color:#fff;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:600;z-index:150;box-shadow:0 10px 25px rgba(0,0,0,0.2);';
+      el.textContent = message;
+      document.body.appendChild(el);
+      setTimeout(function() { el.remove(); }, 2800);
+    };
+    window.showConfirmModal = function(title, message, onConfirm) {
+      var modal = document.getElementById('rapiderConfirmModal');
+      document.getElementById('rapiderConfirmTitle').textContent = title || 'Confirm Cancellation';
+      document.getElementById('rapiderConfirmMsg').textContent = message || 'Are you sure you want to proceed?';
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+      var okBtn = document.getElementById('rapiderConfirmOkBtn');
+      var cancelBtn = document.getElementById('rapiderConfirmCancelBtn');
+      var close = function() { modal.classList.add('hidden'); modal.style.display = 'none'; };
+      cancelBtn.onclick = close;
+      okBtn.onclick = async function() {
+        okBtn.disabled = true;
+        try { await onConfirm(); } finally { okBtn.disabled = false; close(); }
+      };
+    };
+    window.closePageDrawer = function(returnRoute) {
+      if (window.rapiderApi && typeof window.rapiderApi.closePageDrawer === 'function') {
+        window.rapiderApi.closePageDrawer();
+      } else {
+        window.location.hash = '#/' + (returnRoute || 'practice-command');
       }
-    }
-    </script>
+    };
+    window.getQueryParam = function(name) {
+      var hash = window.location.hash || '';
+      var qIdx = hash.indexOf('?');
+      if (qIdx !== -1) {
+        var params = new URLSearchParams(hash.slice(qIdx + 1));
+        if (params.get(name)) return params.get(name);
+      }
+      var searchParams = new URLSearchParams(window.location.search || '');
+      return searchParams.get(name);
+    };
+
+    (function initShell() {
+      var layout = document.getElementById('appLayout');
+      var sidebar = document.getElementById('appSidebar');
+      var collapseBtn = document.getElementById('sidebarCollapseBtn');
+      var brandLink = document.getElementById('suiteBrandLink');
+      var mobileBtn = document.getElementById('mobileMenuBtn');
+      var shade = document.getElementById('mobileShade');
+      var themeBtn = document.getElementById('themeToggleBtn');
+
+      function applyCollapsed(isCollapsed) {
+        if (isCollapsed) {
+          layout.classList.add('sidebar-collapsed');
+          sidebar.classList.add('sidebar-collapsed');
+          sidebar.setAttribute('data-collapsed', 'true');
+        } else {
+          layout.classList.remove('sidebar-collapsed');
+          sidebar.classList.remove('sidebar-collapsed');
+          sidebar.setAttribute('data-collapsed', 'false');
+        }
+        try { localStorage.setItem('rapider_sidebar_collapsed', isCollapsed ? 'true' : 'false'); } catch (_) {}
+      }
+
+      try {
+        if (localStorage.getItem('rapider_sidebar_collapsed') === 'true') applyCollapsed(true);
+      } catch (_) {}
+
+      if (collapseBtn) {
+        collapseBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          applyCollapsed(!sidebar.classList.contains('sidebar-collapsed'));
+        });
+      }
+      if (brandLink) {
+        brandLink.addEventListener('click', function(e) {
+          if (sidebar.classList.contains('sidebar-collapsed')) {
+            e.preventDefault();
+            e.stopPropagation();
+            applyCollapsed(false);
+          }
+        });
+      }
+      if (mobileBtn) {
+        mobileBtn.addEventListener('click', function() { document.body.classList.toggle('navopen'); });
+      }
+      if (shade) {
+        shade.addEventListener('click', function() { document.body.classList.remove('navopen'); });
+      }
+      if (themeBtn) {
+        themeBtn.addEventListener('click', function() {
+          document.documentElement.classList.toggle('dark');
+          document.body.classList.toggle('dark');
+        });
+      }
+    })();
+
+    window.SEED_DATA = {"HltProviderProfile":[{"id":"00000000-0152-0001-0000-000000000001","recordCode":"PP-2026-101","title":"Medical Practice Management Provider Profile — Unit #1","name":"Medical Practice Management Provider Profile — Unit #1","modelTitle":"Provider Profile","ownerName":"Elena Rostova (Principal Lead)","primaryAttrLabel":"Npi Number","primaryAttrValue":"Npi Number: PP-2026-101","secondaryAttrLabel":"Taxonomy Code","secondaryAttrValue":"Medical Practice Management Tier 1","metricLabel":"Display Name","metricValue":"92.0% (125.00 units)","operationalSummary":"Unique 10-digit Luhn-valid npiNumber; cannot book clinical appointments for a facility whose stateCode li","invariantRule":"Unique 10-digit Luhn-valid npiNumber; cannot book clinical appointments for a facility whose stateCode license is missin","crossSuiteRef":"employeeId -> HrEmployee (employees), defaultSupervisorId -> HltProviderProfile?","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550110","status":"PENDING_CREDENTIALING","moderationStage":"PENDING_CREDENTIALING","version":1,"isDeleted":false,"npiNumber":"Npi Number — PP-2026-101","taxonomyCode":"Taxonomy Code — PP-2026-101","displayName":true,"credentialSuffix":"Credential Suffix — PP-2026-101","specialty":"Specialty — PP-2026-101","licensedStates":"Licensed States — PP-2026-101","deaRegistrationExpiresAt":true,"requiresSupervisingCosign":true,"acceptedPayerCodes":"Accepted Payer Codes — PP-2026-101","onCallPhone":"On Call Phone — PP-2026-101","isOnCallActive":true},{"id":"00000000-0152-0001-0000-000000000002","recordCode":"PP-2026-102","title":"Medical Practice Management Provider Profile — Unit #2","name":"Medical Practice Management Provider Profile — Unit #2","modelTitle":"Provider Profile","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Npi Number","primaryAttrValue":"Npi Number: PP-2026-102","secondaryAttrLabel":"Taxonomy Code","secondaryAttrValue":"Medical Practice Management Tier 2","metricLabel":"Display Name","metricValue":"93.1% (172.50 units)","operationalSummary":"Unique 10-digit Luhn-valid npiNumber; cannot book clinical appointments for a facility whose stateCode li","invariantRule":"Unique 10-digit Luhn-valid npiNumber; cannot book clinical appointments for a facility whose stateCode license is missin","crossSuiteRef":"employeeId -> HrEmployee (employees), defaultSupervisorId -> HltProviderProfile?","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550111","status":"ACTIVE","moderationStage":"ACTIVE","version":2,"isDeleted":false,"npiNumber":"Npi Number — PP-2026-102","taxonomyCode":"Taxonomy Code — PP-2026-102","displayName":false,"credentialSuffix":"Credential Suffix — PP-2026-102","specialty":"Specialty — PP-2026-102","licensedStates":"Licensed States — PP-2026-102","deaRegistrationExpiresAt":false,"requiresSupervisingCosign":false,"acceptedPayerCodes":"Accepted Payer Codes — PP-2026-102","onCallPhone":"On Call Phone — PP-2026-102","isOnCallActive":false},{"id":"00000000-0152-0001-0000-000000000003","recordCode":"PP-2026-103","title":"Medical Practice Management Provider Profile — Unit #3","name":"Medical Practice Management Provider Profile — Unit #3","modelTitle":"Provider Profile","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Npi Number","primaryAttrValue":"Npi Number: PP-2026-103","secondaryAttrLabel":"Taxonomy Code","secondaryAttrValue":"Medical Practice Management Tier 3","metricLabel":"Display Name","metricValue":"94.2% (220.00 units)","operationalSummary":"Unique 10-digit Luhn-valid npiNumber; cannot book clinical appointments for a facility whose stateCode li","invariantRule":"Unique 10-digit Luhn-valid npiNumber; cannot book clinical appointments for a facility whose stateCode license is missin","crossSuiteRef":"employeeId -> HrEmployee (employees), defaultSupervisorId -> HltProviderProfile?","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550112","status":"SUSPENDED","moderationStage":"SUSPENDED","version":3,"isDeleted":false,"npiNumber":"Npi Number — PP-2026-103","taxonomyCode":"Taxonomy Code — PP-2026-103","displayName":true,"credentialSuffix":"Credential Suffix — PP-2026-103","specialty":"Specialty — PP-2026-103","licensedStates":"Licensed States — PP-2026-103","deaRegistrationExpiresAt":true,"requiresSupervisingCosign":true,"acceptedPayerCodes":"Accepted Payer Codes — PP-2026-103","onCallPhone":"On Call Phone — PP-2026-103","isOnCallActive":true},{"id":"00000000-0152-0001-0000-000000000004","recordCode":"PP-2026-104","title":"Medical Practice Management Provider Profile — Unit #4","name":"Medical Practice Management Provider Profile — Unit #4","modelTitle":"Provider Profile","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Npi Number","primaryAttrValue":"Npi Number: PP-2026-104","secondaryAttrLabel":"Taxonomy Code","secondaryAttrValue":"Medical Practice Management Tier 1","metricLabel":"Display Name","metricValue":"95.3% (267.50 units)","operationalSummary":"Unique 10-digit Luhn-valid npiNumber; cannot book clinical appointments for a facility whose stateCode li","invariantRule":"Unique 10-digit Luhn-valid npiNumber; cannot book clinical appointments for a facility whose stateCode license is missin","crossSuiteRef":"employeeId -> HrEmployee (employees), defaultSupervisorId -> HltProviderProfile?","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550113","status":"INACTIVE","moderationStage":"INACTIVE","version":4,"isDeleted":false,"npiNumber":"Npi Number — PP-2026-104","taxonomyCode":"Taxonomy Code — PP-2026-104","displayName":false,"credentialSuffix":"Credential Suffix — PP-2026-104","specialty":"Specialty — PP-2026-104","licensedStates":"Licensed States — PP-2026-104","deaRegistrationExpiresAt":false,"requiresSupervisingCosign":false,"acceptedPayerCodes":"Accepted Payer Codes — PP-2026-104","onCallPhone":"On Call Phone — PP-2026-104","isOnCallActive":false},{"id":"00000000-0152-0001-0000-000000000005","recordCode":"PP-2026-105","title":"Medical Practice Management Provider Profile — Unit #5","name":"Medical Practice Management Provider Profile — Unit #5","modelTitle":"Provider Profile","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Npi Number","primaryAttrValue":"Npi Number: PP-2026-105","secondaryAttrLabel":"Taxonomy Code","secondaryAttrValue":"Medical Practice Management Tier 2","metricLabel":"Display Name","metricValue":"96.4% (315.00 units)","operationalSummary":"Unique 10-digit Luhn-valid npiNumber; cannot book clinical appointments for a facility whose stateCode li","invariantRule":"Unique 10-digit Luhn-valid npiNumber; cannot book clinical appointments for a facility whose stateCode license is missin","crossSuiteRef":"employeeId -> HrEmployee (employees), defaultSupervisorId -> HltProviderProfile?","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550114","status":"PENDING_CREDENTIALING","moderationStage":"PENDING_CREDENTIALING","version":5,"isDeleted":false,"npiNumber":"Npi Number — PP-2026-105","taxonomyCode":"Taxonomy Code — PP-2026-105","displayName":true,"credentialSuffix":"Credential Suffix — PP-2026-105","specialty":"Specialty — PP-2026-105","licensedStates":"Licensed States — PP-2026-105","deaRegistrationExpiresAt":true,"requiresSupervisingCosign":true,"acceptedPayerCodes":"Accepted Payer Codes — PP-2026-105","onCallPhone":"On Call Phone — PP-2026-105","isOnCallActive":true}],"HltClinicFacilityRoom":[{"id":"00000000-0152-0002-0000-000000000001","recordCode":"CFR-2026-201","title":"Medical Practice Management Clinic Facility Room — Unit #1","name":"Medical Practice Management Clinic Facility Room — Unit #1","modelTitle":"Clinic Facility Room","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Facility Code","primaryAttrValue":"Facility Code: CFR-2026-201","secondaryAttrLabel":"Facility Name","secondaryAttrValue":"Medical Practice Management Tier 1","metricLabel":"Organization Npi2","metricValue":"92.1% (250.00 units)","operationalSummary":"Exam rooms and diagnostic modalities cannot be double-booked across overlapping HltAppointment time windo","invariantRule":"Exam rooms and diagnostic modalities cannot be double-booked across overlapping HltAppointment time windows.","crossSuiteRef":"parentFacilityId -> HltClinicFacilityRoom?, hrLocationId -> HrLocation? (hrs)","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550115","status":"ACTIVE","moderationStage":"ACTIVE","version":1,"isDeleted":false,"facilityCode":"Facility Code — CFR-2026-201","facilityName":"Facility Name — CFR-2026-201","organizationNpi2":"Organization Npi2 — CFR-2026-201","placeOfServiceCode":"POS_11_OFFICE","stateCode":"State Code — CFR-2026-201","frontDeskPhone":"Front Desk Phone — CFR-2026-201","resourceKind":"CLINIC_SITE","roomCode":"Room Code — CFR-2026-201"},{"id":"00000000-0152-0002-0000-000000000002","recordCode":"CFR-2026-202","title":"Medical Practice Management Clinic Facility Room — Unit #2","name":"Medical Practice Management Clinic Facility Room — Unit #2","modelTitle":"Clinic Facility Room","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Facility Code","primaryAttrValue":"Facility Code: CFR-2026-202","secondaryAttrLabel":"Facility Name","secondaryAttrValue":"Medical Practice Management Tier 2","metricLabel":"Organization Npi2","metricValue":"93.2% (297.50 units)","operationalSummary":"Exam rooms and diagnostic modalities cannot be double-booked across overlapping HltAppointment time windo","invariantRule":"Exam rooms and diagnostic modalities cannot be double-booked across overlapping HltAppointment time windows.","crossSuiteRef":"parentFacilityId -> HltClinicFacilityRoom?, hrLocationId -> HrLocation? (hrs)","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550116","status":"SANITIZING","moderationStage":"SANITIZING","version":2,"isDeleted":false,"facilityCode":"Facility Code — CFR-2026-202","facilityName":"Facility Name — CFR-2026-202","organizationNpi2":"Organization Npi2 — CFR-2026-202","placeOfServiceCode":"POS_22_OUTPATIENT_HOSP","stateCode":"State Code — CFR-2026-202","frontDeskPhone":"Front Desk Phone — CFR-2026-202","resourceKind":"EXAM_ROOM","roomCode":"Room Code — CFR-2026-202"},{"id":"00000000-0152-0002-0000-000000000003","recordCode":"CFR-2026-203","title":"Medical Practice Management Clinic Facility Room — Unit #3","name":"Medical Practice Management Clinic Facility Room — Unit #3","modelTitle":"Clinic Facility Room","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Facility Code","primaryAttrValue":"Facility Code: CFR-2026-203","secondaryAttrLabel":"Facility Name","secondaryAttrValue":"Medical Practice Management Tier 3","metricLabel":"Organization Npi2","metricValue":"94.3% (345.00 units)","operationalSummary":"Exam rooms and diagnostic modalities cannot be double-booked across overlapping HltAppointment time windo","invariantRule":"Exam rooms and diagnostic modalities cannot be double-booked across overlapping HltAppointment time windows.","crossSuiteRef":"parentFacilityId -> HltClinicFacilityRoom?, hrLocationId -> HrLocation? (hrs)","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550117","status":"MAINTENANCE","moderationStage":"MAINTENANCE","version":3,"isDeleted":false,"facilityCode":"Facility Code — CFR-2026-203","facilityName":"Facility Name — CFR-2026-203","organizationNpi2":"Organization Npi2 — CFR-2026-203","placeOfServiceCode":"POS_20_URGENT_CARE","stateCode":"State Code — CFR-2026-203","frontDeskPhone":"Front Desk Phone — CFR-2026-203","resourceKind":"PROCEDURE_SUITE","roomCode":"Room Code — CFR-2026-203"},{"id":"00000000-0152-0002-0000-000000000004","recordCode":"CFR-2026-204","title":"Medical Practice Management Clinic Facility Room — Unit #4","name":"Medical Practice Management Clinic Facility Room — Unit #4","modelTitle":"Clinic Facility Room","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Facility Code","primaryAttrValue":"Facility Code: CFR-2026-204","secondaryAttrLabel":"Facility Name","secondaryAttrValue":"Medical Practice Management Tier 1","metricLabel":"Organization Npi2","metricValue":"95.4% (392.50 units)","operationalSummary":"Exam rooms and diagnostic modalities cannot be double-booked across overlapping HltAppointment time windo","invariantRule":"Exam rooms and diagnostic modalities cannot be double-booked across overlapping HltAppointment time windows.","crossSuiteRef":"parentFacilityId -> HltClinicFacilityRoom?, hrLocationId -> HrLocation? (hrs)","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550118","status":"INACTIVE","moderationStage":"INACTIVE","version":4,"isDeleted":false,"facilityCode":"Facility Code — CFR-2026-204","facilityName":"Facility Name — CFR-2026-204","organizationNpi2":"Organization Npi2 — CFR-2026-204","placeOfServiceCode":"POS_02_TELEHEALTH_OTHER","stateCode":"State Code — CFR-2026-204","frontDeskPhone":"Front Desk Phone — CFR-2026-204","resourceKind":"DIAGNOSTIC_MODALITY","roomCode":"Room Code — CFR-2026-204"},{"id":"00000000-0152-0002-0000-000000000005","recordCode":"CFR-2026-205","title":"Medical Practice Management Clinic Facility Room — Unit #5","name":"Medical Practice Management Clinic Facility Room — Unit #5","modelTitle":"Clinic Facility Room","ownerName":"Noah Kowalski (Specialist)","primaryAttrLabel":"Facility Code","primaryAttrValue":"Facility Code: CFR-2026-205","secondaryAttrLabel":"Facility Name","secondaryAttrValue":"Medical Practice Management Tier 2","metricLabel":"Organization Npi2","metricValue":"96.5% (440.00 units)","operationalSummary":"Exam rooms and diagnostic modalities cannot be double-booked across overlapping HltAppointment time windo","invariantRule":"Exam rooms and diagnostic modalities cannot be double-booked across overlapping HltAppointment time windows.","crossSuiteRef":"parentFacilityId -> HltClinicFacilityRoom?, hrLocationId -> HrLocation? (hrs)","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550119","status":"ACTIVE","moderationStage":"ACTIVE","version":5,"isDeleted":false,"facilityCode":"Facility Code — CFR-2026-205","facilityName":"Facility Name — CFR-2026-205","organizationNpi2":"Organization Npi2 — CFR-2026-205","placeOfServiceCode":"POS_10_TELEHEALTH_HOME","stateCode":"State Code — CFR-2026-205","frontDeskPhone":"Front Desk Phone — CFR-2026-205","resourceKind":"CLINIC_SITE","roomCode":"Room Code — CFR-2026-205"}],"HltAppointmentSlot":[{"id":"00000000-0152-0003-0000-000000000001","recordCode":"AS-2026-301","title":"Medical Practice Management Appointment Slot — Unit #1","name":"Medical Practice Management Appointment Slot — Unit #1","modelTitle":"Appointment Slot","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Template Name","primaryAttrValue":"Template Name: AS-2026-301","secondaryAttrLabel":"Slot Date","secondaryAttrValue":"Medical Practice Management Tier 1","metricLabel":"Start Time Utc","metricValue":"92.2% (375.00 units)","operationalSummary":"bookedCount <= maxBookings; isBlockedTimeOff == true blocks new bookings automatically when synced from H","invariantRule":"bookedCount <= maxBookings; isBlockedTimeOff == true blocks new bookings automatically when synced from HrTimeOffRequest","crossSuiteRef":"providerId -> HltProviderProfile, facilityId -> HltClinicFacilityRoom, coupledMo","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550120","status":"NEW_PATIENT","moderationStage":"NEW_PATIENT","version":1,"isDeleted":false,"templateName":"Template Name — AS-2026-301","slotDate":"Slot Date — AS-2026-301","startTimeUtc":"Start Time Utc — AS-2026-301","endTimeUtc":"End Time Utc — AS-2026-301","durationMinutes":"Duration Minutes — AS-2026-301","allowedVisitType":true,"maxBookings":"Max Bookings — AS-2026-301","bookedCount":"Booked Count — AS-2026-301","isBlockedTimeOff":true,"blockReason":"Block Reason — AS-2026-301"},{"id":"00000000-0152-0003-0000-000000000002","recordCode":"AS-2026-302","title":"Medical Practice Management Appointment Slot — Unit #2","name":"Medical Practice Management Appointment Slot — Unit #2","modelTitle":"Appointment Slot","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Template Name","primaryAttrValue":"Template Name: AS-2026-302","secondaryAttrLabel":"Slot Date","secondaryAttrValue":"Medical Practice Management Tier 2","metricLabel":"Start Time Utc","metricValue":"93.3% (422.50 units)","operationalSummary":"bookedCount <= maxBookings; isBlockedTimeOff == true blocks new bookings automatically when synced from H","invariantRule":"bookedCount <= maxBookings; isBlockedTimeOff == true blocks new bookings automatically when synced from HrTimeOffRequest","crossSuiteRef":"providerId -> HltProviderProfile, facilityId -> HltClinicFacilityRoom, coupledMo","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550121","status":"ESTABLISHED_FOLLOWUP","moderationStage":"ESTABLISHED_FOLLOWUP","version":2,"isDeleted":false,"templateName":"Template Name — AS-2026-302","slotDate":"Slot Date — AS-2026-302","startTimeUtc":"Start Time Utc — AS-2026-302","endTimeUtc":"End Time Utc — AS-2026-302","durationMinutes":"Duration Minutes — AS-2026-302","allowedVisitType":false,"maxBookings":"Max Bookings — AS-2026-302","bookedCount":"Booked Count — AS-2026-302","isBlockedTimeOff":false,"blockReason":"Block Reason — AS-2026-302"},{"id":"00000000-0152-0003-0000-000000000003","recordCode":"AS-2026-303","title":"Medical Practice Management Appointment Slot — Unit #3","name":"Medical Practice Management Appointment Slot — Unit #3","modelTitle":"Appointment Slot","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Template Name","primaryAttrValue":"Template Name: AS-2026-303","secondaryAttrLabel":"Slot Date","secondaryAttrValue":"Medical Practice Management Tier 3","metricLabel":"Start Time Utc","metricValue":"94.4% (470.00 units)","operationalSummary":"bookedCount <= maxBookings; isBlockedTimeOff == true blocks new bookings automatically when synced from H","invariantRule":"bookedCount <= maxBookings; isBlockedTimeOff == true blocks new bookings automatically when synced from HrTimeOffRequest","crossSuiteRef":"providerId -> HltProviderProfile, facilityId -> HltClinicFacilityRoom, coupledMo","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550122","status":"SAME_DAY_ACUTE","moderationStage":"SAME_DAY_ACUTE","version":3,"isDeleted":false,"templateName":"Template Name — AS-2026-303","slotDate":"Slot Date — AS-2026-303","startTimeUtc":"Start Time Utc — AS-2026-303","endTimeUtc":"End Time Utc — AS-2026-303","durationMinutes":"Duration Minutes — AS-2026-303","allowedVisitType":true,"maxBookings":"Max Bookings — AS-2026-303","bookedCount":"Booked Count — AS-2026-303","isBlockedTimeOff":true,"blockReason":"Block Reason — AS-2026-303"},{"id":"00000000-0152-0003-0000-000000000004","recordCode":"AS-2026-304","title":"Medical Practice Management Appointment Slot — Unit #4","name":"Medical Practice Management Appointment Slot — Unit #4","modelTitle":"Appointment Slot","ownerName":"Noah Kowalski (Specialist)","primaryAttrLabel":"Template Name","primaryAttrValue":"Template Name: AS-2026-304","secondaryAttrLabel":"Slot Date","secondaryAttrValue":"Medical Practice Management Tier 1","metricLabel":"Start Time Utc","metricValue":"95.5% (517.50 units)","operationalSummary":"bookedCount <= maxBookings; isBlockedTimeOff == true blocks new bookings automatically when synced from H","invariantRule":"bookedCount <= maxBookings; isBlockedTimeOff == true blocks new bookings automatically when synced from HrTimeOffRequest","crossSuiteRef":"providerId -> HltProviderProfile, facilityId -> HltClinicFacilityRoom, coupledMo","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550123","status":"PROCEDURE","moderationStage":"PROCEDURE","version":4,"isDeleted":false,"templateName":"Template Name — AS-2026-304","slotDate":"Slot Date — AS-2026-304","startTimeUtc":"Start Time Utc — AS-2026-304","endTimeUtc":"End Time Utc — AS-2026-304","durationMinutes":"Duration Minutes — AS-2026-304","allowedVisitType":false,"maxBookings":"Max Bookings — AS-2026-304","bookedCount":"Booked Count — AS-2026-304","isBlockedTimeOff":false,"blockReason":"Block Reason — AS-2026-304"},{"id":"00000000-0152-0003-0000-000000000005","recordCode":"AS-2026-305","title":"Medical Practice Management Appointment Slot — Unit #5","name":"Medical Practice Management Appointment Slot — Unit #5","modelTitle":"Appointment Slot","ownerName":"Elena Rostova (Principal Lead)","primaryAttrLabel":"Template Name","primaryAttrValue":"Template Name: AS-2026-305","secondaryAttrLabel":"Slot Date","secondaryAttrValue":"Medical Practice Management Tier 2","metricLabel":"Start Time Utc","metricValue":"96.6% (565.00 units)","operationalSummary":"bookedCount <= maxBookings; isBlockedTimeOff == true blocks new bookings automatically when synced from H","invariantRule":"bookedCount <= maxBookings; isBlockedTimeOff == true blocks new bookings automatically when synced from HrTimeOffRequest","crossSuiteRef":"providerId -> HltProviderProfile, facilityId -> HltClinicFacilityRoom, coupledMo","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550124","status":"TELEHEALTH","moderationStage":"TELEHEALTH","version":5,"isDeleted":false,"templateName":"Template Name — AS-2026-305","slotDate":"Slot Date — AS-2026-305","startTimeUtc":"Start Time Utc — AS-2026-305","endTimeUtc":"End Time Utc — AS-2026-305","durationMinutes":"Duration Minutes — AS-2026-305","allowedVisitType":true,"maxBookings":"Max Bookings — AS-2026-305","bookedCount":"Booked Count — AS-2026-305","isBlockedTimeOff":true,"blockReason":"Block Reason — AS-2026-305"}],"HltAppointment":[{"id":"00000000-0152-0004-0000-000000000001","recordCode":"A-2026-401","title":"Medical Practice Management Appointment — Unit #1","name":"Medical Practice Management Appointment — Unit #1","modelTitle":"Appointment","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Appointment Ref","primaryAttrValue":"Appointment Ref: A-2026-401","secondaryAttrLabel":"Visit Type","secondaryAttrValue":"NEW_PATIENT","metricLabel":"Modality","metricValue":"92.3% (500.00 units)","operationalSummary":"Transitioning to CANCELLED atomically decrements HltAppointmentSlot.bookedCount; transitioning to ROOMED ","invariantRule":"Transitioning to CANCELLED atomically decrements HltAppointmentSlot.bookedCount; transitioning to ROOMED requires assign","crossSuiteRef":"patientId -> HltPatient (#151), providerId -> HltProviderProfile, facilityId -> ","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550125","status":"WAITLISTED","moderationStage":"WAITLISTED","version":1,"isDeleted":false,"appointmentRef":"Appointment Ref — A-2026-401","visitType":true,"modality":"IN_PERSON","scheduledStartUtc":"Scheduled Start Utc — A-2026-401","scheduledEndUtc":"Scheduled End Utc — A-2026-401","seriesGroupId":"Series Group — A-2026-401","reasonForVisit":true,"noShowRiskScore":"500.00","isWaitlistCandidate":true,"cancellationReason":"Cancellation Reason — A-2026-401"},{"id":"00000000-0152-0004-0000-000000000002","recordCode":"A-2026-402","title":"Medical Practice Management Appointment — Unit #2","name":"Medical Practice Management Appointment — Unit #2","modelTitle":"Appointment","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Appointment Ref","primaryAttrValue":"Appointment Ref: A-2026-402","secondaryAttrLabel":"Visit Type","secondaryAttrValue":"ESTABLISHED_FOLLOWUP","metricLabel":"Modality","metricValue":"93.4% (547.50 units)","operationalSummary":"Transitioning to CANCELLED atomically decrements HltAppointmentSlot.bookedCount; transitioning to ROOMED ","invariantRule":"Transitioning to CANCELLED atomically decrements HltAppointmentSlot.bookedCount; transitioning to ROOMED requires assign","crossSuiteRef":"patientId -> HltPatient (#151), providerId -> HltProviderProfile, facilityId -> ","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550126","status":"SCHEDULED","moderationStage":"SCHEDULED","version":2,"isDeleted":false,"appointmentRef":"Appointment Ref — A-2026-402","visitType":false,"modality":"TELEHEALTH","scheduledStartUtc":"Scheduled Start Utc — A-2026-402","scheduledEndUtc":"Scheduled End Utc — A-2026-402","seriesGroupId":"Series Group — A-2026-402","reasonForVisit":false,"noShowRiskScore":"547.50","isWaitlistCandidate":false,"cancellationReason":"Cancellation Reason — A-2026-402"},{"id":"00000000-0152-0004-0000-000000000003","recordCode":"A-2026-403","title":"Medical Practice Management Appointment — Unit #3","name":"Medical Practice Management Appointment — Unit #3","modelTitle":"Appointment","ownerName":"Noah Kowalski (Specialist)","primaryAttrLabel":"Appointment Ref","primaryAttrValue":"Appointment Ref: A-2026-403","secondaryAttrLabel":"Visit Type","secondaryAttrValue":"SAME_DAY_ACUTE","metricLabel":"Modality","metricValue":"94.5% (595.00 units)","operationalSummary":"Transitioning to CANCELLED atomically decrements HltAppointmentSlot.bookedCount; transitioning to ROOMED ","invariantRule":"Transitioning to CANCELLED atomically decrements HltAppointmentSlot.bookedCount; transitioning to ROOMED requires assign","crossSuiteRef":"patientId -> HltPatient (#151), providerId -> HltProviderProfile, facilityId -> ","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550127","status":"CONFIRMED","moderationStage":"CONFIRMED","version":3,"isDeleted":false,"appointmentRef":"Appointment Ref — A-2026-403","visitType":true,"modality":"IN_PERSON","scheduledStartUtc":"Scheduled Start Utc — A-2026-403","scheduledEndUtc":"Scheduled End Utc — A-2026-403","seriesGroupId":"Series Group — A-2026-403","reasonForVisit":true,"noShowRiskScore":"595.00","isWaitlistCandidate":true,"cancellationReason":"Cancellation Reason — A-2026-403"},{"id":"00000000-0152-0004-0000-000000000004","recordCode":"A-2026-404","title":"Medical Practice Management Appointment — Unit #4","name":"Medical Practice Management Appointment — Unit #4","modelTitle":"Appointment","ownerName":"Elena Rostova (Principal Lead)","primaryAttrLabel":"Appointment Ref","primaryAttrValue":"Appointment Ref: A-2026-404","secondaryAttrLabel":"Visit Type","secondaryAttrValue":"PROCEDURE","metricLabel":"Modality","metricValue":"95.6% (642.50 units)","operationalSummary":"Transitioning to CANCELLED atomically decrements HltAppointmentSlot.bookedCount; transitioning to ROOMED ","invariantRule":"Transitioning to CANCELLED atomically decrements HltAppointmentSlot.bookedCount; transitioning to ROOMED requires assign","crossSuiteRef":"patientId -> HltPatient (#151), providerId -> HltProviderProfile, facilityId -> ","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550128","status":"CHECKED_IN","moderationStage":"CHECKED_IN","version":4,"isDeleted":false,"appointmentRef":"Appointment Ref — A-2026-404","visitType":false,"modality":"TELEHEALTH","scheduledStartUtc":"Scheduled Start Utc — A-2026-404","scheduledEndUtc":"Scheduled End Utc — A-2026-404","seriesGroupId":"Series Group — A-2026-404","reasonForVisit":false,"noShowRiskScore":"642.50","isWaitlistCandidate":false,"cancellationReason":"Cancellation Reason — A-2026-404"},{"id":"00000000-0152-0004-0000-000000000005","recordCode":"A-2026-405","title":"Medical Practice Management Appointment — Unit #5","name":"Medical Practice Management Appointment — Unit #5","modelTitle":"Appointment","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Appointment Ref","primaryAttrValue":"Appointment Ref: A-2026-405","secondaryAttrLabel":"Visit Type","secondaryAttrValue":"TELEHEALTH","metricLabel":"Modality","metricValue":"96.7% (690.00 units)","operationalSummary":"Transitioning to CANCELLED atomically decrements HltAppointmentSlot.bookedCount; transitioning to ROOMED ","invariantRule":"Transitioning to CANCELLED atomically decrements HltAppointmentSlot.bookedCount; transitioning to ROOMED requires assign","crossSuiteRef":"patientId -> HltPatient (#151), providerId -> HltProviderProfile, facilityId -> ","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550129","status":"ROOMED","moderationStage":"ROOMED","version":5,"isDeleted":false,"appointmentRef":"Appointment Ref — A-2026-405","visitType":true,"modality":"IN_PERSON","scheduledStartUtc":"Scheduled Start Utc — A-2026-405","scheduledEndUtc":"Scheduled End Utc — A-2026-405","seriesGroupId":"Series Group — A-2026-405","reasonForVisit":true,"noShowRiskScore":"690.00","isWaitlistCandidate":true,"cancellationReason":"Cancellation Reason — A-2026-405"}],"HltPatientCoverage":[{"id":"00000000-0152-0005-0000-000000000001","recordCode":"PC-2026-501","title":"Medical Practice Management Patient Coverage — Unit #1","name":"Medical Practice Management Patient Coverage — Unit #1","modelTitle":"Patient Coverage","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Policy Ref","primaryAttrValue":"Policy Ref: PC-2026-501","secondaryAttrLabel":"Cob Priority","secondaryAttrValue":"PRIMARY","metricLabel":"Payer Code","metricValue":"92.4% (625.00 units)","operationalSummary":"At most one ACTIVE coverage per (patientId, cobPriority) rank at a given service date.","invariantRule":"At most one ACTIVE coverage per (patientId, cobPriority) rank at a given service date.","crossSuiteRef":"patientId -> HltPatient (#151), cardFrontFileId -> DriveFile?, cardBackFileId ->","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550130","status":"ACTIVE","moderationStage":"ACTIVE","version":1,"isDeleted":false,"policyRef":"Policy Ref — PC-2026-501","cobPriority":"PRIMARY","payerCode":"Payer Code — PC-2026-501","payerName":"Payer Name — PC-2026-501","planType":"COMMERCIAL","memberId":"Member — PC-2026-501","groupNumber":"Group Number — PC-2026-501","subscriberRelationship":"SELF","subscriberFullName":"Subscriber Full Name — PC-2026-501","subscriberDob":"Subscriber Dob — PC-2026-501","effectiveStartDate":"Effective Start Date — PC-2026-501","effectiveEndDate":"Effective End Date — PC-2026-501"},{"id":"00000000-0152-0005-0000-000000000002","recordCode":"PC-2026-502","title":"Medical Practice Management Patient Coverage — Unit #2","name":"Medical Practice Management Patient Coverage — Unit #2","modelTitle":"Patient Coverage","ownerName":"Noah Kowalski (Specialist)","primaryAttrLabel":"Policy Ref","primaryAttrValue":"Policy Ref: PC-2026-502","secondaryAttrLabel":"Cob Priority","secondaryAttrValue":"SECONDARY","metricLabel":"Payer Code","metricValue":"93.5% (672.50 units)","operationalSummary":"At most one ACTIVE coverage per (patientId, cobPriority) rank at a given service date.","invariantRule":"At most one ACTIVE coverage per (patientId, cobPriority) rank at a given service date.","crossSuiteRef":"patientId -> HltPatient (#151), cardFrontFileId -> DriveFile?, cardBackFileId ->","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550131","status":"INACTIVE_TERMINATED","moderationStage":"INACTIVE_TERMINATED","version":2,"isDeleted":false,"policyRef":"Policy Ref — PC-2026-502","cobPriority":"SECONDARY","payerCode":"Payer Code — PC-2026-502","payerName":"Payer Name — PC-2026-502","planType":"MEDICARE","memberId":"Member — PC-2026-502","groupNumber":"Group Number — PC-2026-502","subscriberRelationship":"SPOUSE","subscriberFullName":"Subscriber Full Name — PC-2026-502","subscriberDob":"Subscriber Dob — PC-2026-502","effectiveStartDate":"Effective Start Date — PC-2026-502","effectiveEndDate":"Effective End Date — PC-2026-502"},{"id":"00000000-0152-0005-0000-000000000003","recordCode":"PC-2026-503","title":"Medical Practice Management Patient Coverage — Unit #3","name":"Medical Practice Management Patient Coverage — Unit #3","modelTitle":"Patient Coverage","ownerName":"Elena Rostova (Principal Lead)","primaryAttrLabel":"Policy Ref","primaryAttrValue":"Policy Ref: PC-2026-503","secondaryAttrLabel":"Cob Priority","secondaryAttrValue":"TERTIARY","metricLabel":"Payer Code","metricValue":"94.6% (720.00 units)","operationalSummary":"At most one ACTIVE coverage per (patientId, cobPriority) rank at a given service date.","invariantRule":"At most one ACTIVE coverage per (patientId, cobPriority) rank at a given service date.","crossSuiteRef":"patientId -> HltPatient (#151), cardFrontFileId -> DriveFile?, cardBackFileId ->","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550132","status":"PENDING_VERIFICATION","moderationStage":"PENDING_VERIFICATION","version":3,"isDeleted":false,"policyRef":"Policy Ref — PC-2026-503","cobPriority":"TERTIARY","payerCode":"Payer Code — PC-2026-503","payerName":"Payer Name — PC-2026-503","planType":"MEDICAID","memberId":"Member — PC-2026-503","groupNumber":"Group Number — PC-2026-503","subscriberRelationship":"CHILD","subscriberFullName":"Subscriber Full Name — PC-2026-503","subscriberDob":"Subscriber Dob — PC-2026-503","effectiveStartDate":"Effective Start Date — PC-2026-503","effectiveEndDate":"Effective End Date — PC-2026-503"},{"id":"00000000-0152-0005-0000-000000000004","recordCode":"PC-2026-504","title":"Medical Practice Management Patient Coverage — Unit #4","name":"Medical Practice Management Patient Coverage — Unit #4","modelTitle":"Patient Coverage","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Policy Ref","primaryAttrValue":"Policy Ref: PC-2026-504","secondaryAttrLabel":"Cob Priority","secondaryAttrValue":"SELF_PAY_ONLY","metricLabel":"Payer Code","metricValue":"95.7% (767.50 units)","operationalSummary":"At most one ACTIVE coverage per (patientId, cobPriority) rank at a given service date.","invariantRule":"At most one ACTIVE coverage per (patientId, cobPriority) rank at a given service date.","crossSuiteRef":"patientId -> HltPatient (#151), cardFrontFileId -> DriveFile?, cardBackFileId ->","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550133","status":"ACTIVE","moderationStage":"ACTIVE","version":4,"isDeleted":false,"policyRef":"Policy Ref — PC-2026-504","cobPriority":"SELF_PAY_ONLY","payerCode":"Payer Code — PC-2026-504","payerName":"Payer Name — PC-2026-504","planType":"TRICARE","memberId":"Member — PC-2026-504","groupNumber":"Group Number — PC-2026-504","subscriberRelationship":"OTHER","subscriberFullName":"Subscriber Full Name — PC-2026-504","subscriberDob":"Subscriber Dob — PC-2026-504","effectiveStartDate":"Effective Start Date — PC-2026-504","effectiveEndDate":"Effective End Date — PC-2026-504"},{"id":"00000000-0152-0005-0000-000000000005","recordCode":"PC-2026-505","title":"Medical Practice Management Patient Coverage — Unit #5","name":"Medical Practice Management Patient Coverage — Unit #5","modelTitle":"Patient Coverage","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Policy Ref","primaryAttrValue":"Policy Ref: PC-2026-505","secondaryAttrLabel":"Cob Priority","secondaryAttrValue":"PRIMARY","metricLabel":"Payer Code","metricValue":"96.8% (815.00 units)","operationalSummary":"At most one ACTIVE coverage per (patientId, cobPriority) rank at a given service date.","invariantRule":"At most one ACTIVE coverage per (patientId, cobPriority) rank at a given service date.","crossSuiteRef":"patientId -> HltPatient (#151), cardFrontFileId -> DriveFile?, cardBackFileId ->","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550134","status":"INACTIVE_TERMINATED","moderationStage":"INACTIVE_TERMINATED","version":5,"isDeleted":false,"policyRef":"Policy Ref — PC-2026-505","cobPriority":"PRIMARY","payerCode":"Payer Code — PC-2026-505","payerName":"Payer Name — PC-2026-505","planType":"WORKERS_COMP","memberId":"Member — PC-2026-505","groupNumber":"Group Number — PC-2026-505","subscriberRelationship":"SELF","subscriberFullName":"Subscriber Full Name — PC-2026-505","subscriberDob":"Subscriber Dob — PC-2026-505","effectiveStartDate":"Effective Start Date — PC-2026-505","effectiveEndDate":"Effective End Date — PC-2026-505"}],"HltEligibilityVerification":[{"id":"00000000-0152-0006-0000-000000000001","recordCode":"EV-2026-601","title":"Medical Practice Management Eligibility Verification — Unit #1","name":"Medical Practice Management Eligibility Verification — Unit #1","modelTitle":"Eligibility Verification","ownerName":"Noah Kowalski (Specialist)","primaryAttrLabel":"Verification Ref","primaryAttrValue":"Verification Ref: EV-2026-601","secondaryAttrLabel":"Transaction Kind","secondaryAttrValue":"X12_270_271_ELIGIBILITY","metricLabel":"Verified At","metricValue":"92.5% (750.00 units)","operationalSummary":"For AUTH_APPROVED visit-limited authorizations, usedVisits <= approvedVisits; INACTIVE or AUTH_DENIED aut","invariantRule":"For AUTH_APPROVED visit-limited authorizations, usedVisits <= approvedVisits; INACTIVE or AUTH_DENIED auto-generates a f","crossSuiteRef":"patientId -> HltPatient, coverageId -> HltPatientCoverage, appointmentId -> HltA","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550135","status":"X12_270_271_ELIGIBILITY","moderationStage":"X12_270_271_ELIGIBILITY","version":1,"isDeleted":false,"verificationRef":"Verification Ref — EV-2026-601","transactionKind":"X12_270_271_ELIGIBILITY","verifiedAt":true,"coverageStatusResult":"ACTIVE_COVERED","currency":"Currency — EV-2026-601","copayAmount":"750.00","coinsurancePct":"Coinsurance Pct — EV-2026-601","deductibleTotal":"Deductible Total — EV-2026-601","deductibleRemaining":"Deductible Remaining — EV-2026-601","oopMaxRemaining":"Oop Max Remaining — EV-2026-601","priorAuthNumber":"Prior Auth Number — EV-2026-601","approvedVisits":true,"usedVisits":true,"authExpiresAt":"Auth Expires At — EV-2026-601"},{"id":"00000000-0152-0006-0000-000000000002","recordCode":"EV-2026-602","title":"Medical Practice Management Eligibility Verification — Unit #2","name":"Medical Practice Management Eligibility Verification — Unit #2","modelTitle":"Eligibility Verification","ownerName":"Elena Rostova (Principal Lead)","primaryAttrLabel":"Verification Ref","primaryAttrValue":"Verification Ref: EV-2026-602","secondaryAttrLabel":"Transaction Kind","secondaryAttrValue":"X12_278_PRIOR_AUTH","metricLabel":"Verified At","metricValue":"93.6% (797.50 units)","operationalSummary":"For AUTH_APPROVED visit-limited authorizations, usedVisits <= approvedVisits; INACTIVE or AUTH_DENIED aut","invariantRule":"For AUTH_APPROVED visit-limited authorizations, usedVisits <= approvedVisits; INACTIVE or AUTH_DENIED auto-generates a f","crossSuiteRef":"patientId -> HltPatient, coverageId -> HltPatientCoverage, appointmentId -> HltA","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550136","status":"X12_278_PRIOR_AUTH","moderationStage":"X12_278_PRIOR_AUTH","version":2,"isDeleted":false,"verificationRef":"Verification Ref — EV-2026-602","transactionKind":"X12_278_PRIOR_AUTH","verifiedAt":false,"coverageStatusResult":"INACTIVE","currency":"Currency — EV-2026-602","copayAmount":"797.50","coinsurancePct":"Coinsurance Pct — EV-2026-602","deductibleTotal":"Deductible Total — EV-2026-602","deductibleRemaining":"Deductible Remaining — EV-2026-602","oopMaxRemaining":"Oop Max Remaining — EV-2026-602","priorAuthNumber":"Prior Auth Number — EV-2026-602","approvedVisits":false,"usedVisits":false,"authExpiresAt":"Auth Expires At — EV-2026-602"},{"id":"00000000-0152-0006-0000-000000000003","recordCode":"EV-2026-603","title":"Medical Practice Management Eligibility Verification — Unit #3","name":"Medical Practice Management Eligibility Verification — Unit #3","modelTitle":"Eligibility Verification","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Verification Ref","primaryAttrValue":"Verification Ref: EV-2026-603","secondaryAttrLabel":"Transaction Kind","secondaryAttrValue":"DAVINCI_CRD_CHECK","metricLabel":"Verified At","metricValue":"94.7% (845.00 units)","operationalSummary":"For AUTH_APPROVED visit-limited authorizations, usedVisits <= approvedVisits; INACTIVE or AUTH_DENIED aut","invariantRule":"For AUTH_APPROVED visit-limited authorizations, usedVisits <= approvedVisits; INACTIVE or AUTH_DENIED auto-generates a f","crossSuiteRef":"patientId -> HltPatient, coverageId -> HltPatientCoverage, appointmentId -> HltA","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550137","status":"DAVINCI_CRD_CHECK","moderationStage":"DAVINCI_CRD_CHECK","version":3,"isDeleted":false,"verificationRef":"Verification Ref — EV-2026-603","transactionKind":"DAVINCI_CRD_CHECK","verifiedAt":true,"coverageStatusResult":"OUT_OF_NETWORK","currency":"Currency — EV-2026-603","copayAmount":"845.00","coinsurancePct":"Coinsurance Pct — EV-2026-603","deductibleTotal":"Deductible Total — EV-2026-603","deductibleRemaining":"Deductible Remaining — EV-2026-603","oopMaxRemaining":"Oop Max Remaining — EV-2026-603","priorAuthNumber":"Prior Auth Number — EV-2026-603","approvedVisits":true,"usedVisits":true,"authExpiresAt":"Auth Expires At — EV-2026-603"},{"id":"00000000-0152-0006-0000-000000000004","recordCode":"EV-2026-604","title":"Medical Practice Management Eligibility Verification — Unit #4","name":"Medical Practice Management Eligibility Verification — Unit #4","modelTitle":"Eligibility Verification","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Verification Ref","primaryAttrValue":"Verification Ref: EV-2026-604","secondaryAttrLabel":"Transaction Kind","secondaryAttrValue":"X12_270_271_ELIGIBILITY","metricLabel":"Verified At","metricValue":"95.8% (892.50 units)","operationalSummary":"For AUTH_APPROVED visit-limited authorizations, usedVisits <= approvedVisits; INACTIVE or AUTH_DENIED aut","invariantRule":"For AUTH_APPROVED visit-limited authorizations, usedVisits <= approvedVisits; INACTIVE or AUTH_DENIED auto-generates a f","crossSuiteRef":"patientId -> HltPatient, coverageId -> HltPatientCoverage, appointmentId -> HltA","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550138","status":"X12_270_271_ELIGIBILITY","moderationStage":"X12_270_271_ELIGIBILITY","version":4,"isDeleted":false,"verificationRef":"Verification Ref — EV-2026-604","transactionKind":"X12_270_271_ELIGIBILITY","verifiedAt":false,"coverageStatusResult":"AUTH_REQUIRED","currency":"Currency — EV-2026-604","copayAmount":"892.50","coinsurancePct":"Coinsurance Pct — EV-2026-604","deductibleTotal":"Deductible Total — EV-2026-604","deductibleRemaining":"Deductible Remaining — EV-2026-604","oopMaxRemaining":"Oop Max Remaining — EV-2026-604","priorAuthNumber":"Prior Auth Number — EV-2026-604","approvedVisits":false,"usedVisits":false,"authExpiresAt":"Auth Expires At — EV-2026-604"},{"id":"00000000-0152-0006-0000-000000000005","recordCode":"EV-2026-605","title":"Medical Practice Management Eligibility Verification — Unit #5","name":"Medical Practice Management Eligibility Verification — Unit #5","modelTitle":"Eligibility Verification","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Verification Ref","primaryAttrValue":"Verification Ref: EV-2026-605","secondaryAttrLabel":"Transaction Kind","secondaryAttrValue":"X12_278_PRIOR_AUTH","metricLabel":"Verified At","metricValue":"96.0% (940.00 units)","operationalSummary":"For AUTH_APPROVED visit-limited authorizations, usedVisits <= approvedVisits; INACTIVE or AUTH_DENIED aut","invariantRule":"For AUTH_APPROVED visit-limited authorizations, usedVisits <= approvedVisits; INACTIVE or AUTH_DENIED auto-generates a f","crossSuiteRef":"patientId -> HltPatient, coverageId -> HltPatientCoverage, appointmentId -> HltA","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550139","status":"X12_278_PRIOR_AUTH","moderationStage":"X12_278_PRIOR_AUTH","version":5,"isDeleted":false,"verificationRef":"Verification Ref — EV-2026-605","transactionKind":"X12_278_PRIOR_AUTH","verifiedAt":true,"coverageStatusResult":"AUTH_APPROVED","currency":"Currency — EV-2026-605","copayAmount":"940.00","coinsurancePct":"Coinsurance Pct — EV-2026-605","deductibleTotal":"Deductible Total — EV-2026-605","deductibleRemaining":"Deductible Remaining — EV-2026-605","oopMaxRemaining":"Oop Max Remaining — EV-2026-605","priorAuthNumber":"Prior Auth Number — EV-2026-605","approvedVisits":true,"usedVisits":true,"authExpiresAt":"Auth Expires At — EV-2026-605"}],"HltFrontDeskCheckIn":[{"id":"00000000-0152-0007-0000-000000000001","recordCode":"FDC-2026-701","title":"Medical Practice Management Front Desk Check In — Unit #1","name":"Medical Practice Management Front Desk Check In — Unit #1","modelTitle":"Front Desk Check In","ownerName":"Elena Rostova (Principal Lead)","primaryAttrLabel":"Check In Ref","primaryAttrValue":"Check In Ref: FDC-2026-701","secondaryAttrLabel":"Arrived At","secondaryAttrValue":"Medical Practice Management Tier 1","metricLabel":"Roomed At","metricValue":"92.6% (875.00 units)","operationalSummary":"Zero-PHI Payment Invariant: posPaymentToken (POS-CHK-{uuid}) is the sole identifier sent to FinPaymentInt","invariantRule":"Zero-PHI Payment Invariant: posPaymentToken (POS-CHK-{uuid}) is the sole identifier sent to FinPaymentIntent; WAIVED_HAR","crossSuiteRef":"appointmentId -> HltAppointment, patientId -> HltPatient, assignedRoomId -> HltC","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550140","status":"NONE_DUE","moderationStage":"NONE_DUE","version":1,"isDeleted":false,"checkInRef":"Check In Ref — FDC-2026-701","arrivedAt":"Arrived At — FDC-2026-701","roomedAt":"Roomed At — FDC-2026-701","checkedOutAt":"Checked Out At — FDC-2026-701","photoIdVerified":true,"hipaaNoticeSigned":"Hipaa Notice Signed — FDC-2026-701","demographicsConfirmed":"Demographics Confirmed — FDC-2026-701","currency":"Currency — FDC-2026-701","estimatedPatientDue":"Estimated Patient Due — FDC-2026-701","copayCollectedAmount":"875.00","posPaymentToken":"Pos Payment Token — FDC-2026-701","paymentStatus":"NONE_DUE","waiverReason":"Waiver Reason — FDC-2026-701"},{"id":"00000000-0152-0007-0000-000000000002","recordCode":"FDC-2026-702","title":"Medical Practice Management Front Desk Check In — Unit #2","name":"Medical Practice Management Front Desk Check In — Unit #2","modelTitle":"Front Desk Check In","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Check In Ref","primaryAttrValue":"Check In Ref: FDC-2026-702","secondaryAttrLabel":"Arrived At","secondaryAttrValue":"Medical Practice Management Tier 2","metricLabel":"Roomed At","metricValue":"93.7% (922.50 units)","operationalSummary":"Zero-PHI Payment Invariant: posPaymentToken (POS-CHK-{uuid}) is the sole identifier sent to FinPaymentInt","invariantRule":"Zero-PHI Payment Invariant: posPaymentToken (POS-CHK-{uuid}) is the sole identifier sent to FinPaymentIntent; WAIVED_HAR","crossSuiteRef":"appointmentId -> HltAppointment, patientId -> HltPatient, assignedRoomId -> HltC","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550141","status":"COLLECTED","moderationStage":"COLLECTED","version":2,"isDeleted":false,"checkInRef":"Check In Ref — FDC-2026-702","arrivedAt":"Arrived At — FDC-2026-702","roomedAt":"Roomed At — FDC-2026-702","checkedOutAt":"Checked Out At — FDC-2026-702","photoIdVerified":false,"hipaaNoticeSigned":"Hipaa Notice Signed — FDC-2026-702","demographicsConfirmed":"Demographics Confirmed — FDC-2026-702","currency":"Currency — FDC-2026-702","estimatedPatientDue":"Estimated Patient Due — FDC-2026-702","copayCollectedAmount":"922.50","posPaymentToken":"Pos Payment Token — FDC-2026-702","paymentStatus":"COLLECTED","waiverReason":"Waiver Reason — FDC-2026-702"},{"id":"00000000-0152-0007-0000-000000000003","recordCode":"FDC-2026-703","title":"Medical Practice Management Front Desk Check In — Unit #3","name":"Medical Practice Management Front Desk Check In — Unit #3","modelTitle":"Front Desk Check In","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Check In Ref","primaryAttrValue":"Check In Ref: FDC-2026-703","secondaryAttrLabel":"Arrived At","secondaryAttrValue":"Medical Practice Management Tier 3","metricLabel":"Roomed At","metricValue":"94.8% (970.00 units)","operationalSummary":"Zero-PHI Payment Invariant: posPaymentToken (POS-CHK-{uuid}) is the sole identifier sent to FinPaymentInt","invariantRule":"Zero-PHI Payment Invariant: posPaymentToken (POS-CHK-{uuid}) is the sole identifier sent to FinPaymentIntent; WAIVED_HAR","crossSuiteRef":"appointmentId -> HltAppointment, patientId -> HltPatient, assignedRoomId -> HltC","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550142","status":"DEFERRED_TO_BILLING","moderationStage":"DEFERRED_TO_BILLING","version":3,"isDeleted":false,"checkInRef":"Check In Ref — FDC-2026-703","arrivedAt":"Arrived At — FDC-2026-703","roomedAt":"Roomed At — FDC-2026-703","checkedOutAt":"Checked Out At — FDC-2026-703","photoIdVerified":true,"hipaaNoticeSigned":"Hipaa Notice Signed — FDC-2026-703","demographicsConfirmed":"Demographics Confirmed — FDC-2026-703","currency":"Currency — FDC-2026-703","estimatedPatientDue":"Estimated Patient Due — FDC-2026-703","copayCollectedAmount":"970.00","posPaymentToken":"Pos Payment Token — FDC-2026-703","paymentStatus":"DEFERRED_TO_BILLING","waiverReason":"Waiver Reason — FDC-2026-703"},{"id":"00000000-0152-0007-0000-000000000004","recordCode":"FDC-2026-704","title":"Medical Practice Management Front Desk Check In — Unit #4","name":"Medical Practice Management Front Desk Check In — Unit #4","modelTitle":"Front Desk Check In","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Check In Ref","primaryAttrValue":"Check In Ref: FDC-2026-704","secondaryAttrLabel":"Arrived At","secondaryAttrValue":"Medical Practice Management Tier 1","metricLabel":"Roomed At","metricValue":"95.0% (1017.50 units)","operationalSummary":"Zero-PHI Payment Invariant: posPaymentToken (POS-CHK-{uuid}) is the sole identifier sent to FinPaymentInt","invariantRule":"Zero-PHI Payment Invariant: posPaymentToken (POS-CHK-{uuid}) is the sole identifier sent to FinPaymentIntent; WAIVED_HAR","crossSuiteRef":"appointmentId -> HltAppointment, patientId -> HltPatient, assignedRoomId -> HltC","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550143","status":"WAIVED_HARDSHIP","moderationStage":"WAIVED_HARDSHIP","version":4,"isDeleted":false,"checkInRef":"Check In Ref — FDC-2026-704","arrivedAt":"Arrived At — FDC-2026-704","roomedAt":"Roomed At — FDC-2026-704","checkedOutAt":"Checked Out At — FDC-2026-704","photoIdVerified":false,"hipaaNoticeSigned":"Hipaa Notice Signed — FDC-2026-704","demographicsConfirmed":"Demographics Confirmed — FDC-2026-704","currency":"Currency — FDC-2026-704","estimatedPatientDue":"Estimated Patient Due — FDC-2026-704","copayCollectedAmount":"1017.50","posPaymentToken":"Pos Payment Token — FDC-2026-704","paymentStatus":"WAIVED_HARDSHIP","waiverReason":"Waiver Reason — FDC-2026-704"},{"id":"00000000-0152-0007-0000-000000000005","recordCode":"FDC-2026-705","title":"Medical Practice Management Front Desk Check In — Unit #5","name":"Medical Practice Management Front Desk Check In — Unit #5","modelTitle":"Front Desk Check In","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Check In Ref","primaryAttrValue":"Check In Ref: FDC-2026-705","secondaryAttrLabel":"Arrived At","secondaryAttrValue":"Medical Practice Management Tier 2","metricLabel":"Roomed At","metricValue":"96.1% (1065.00 units)","operationalSummary":"Zero-PHI Payment Invariant: posPaymentToken (POS-CHK-{uuid}) is the sole identifier sent to FinPaymentInt","invariantRule":"Zero-PHI Payment Invariant: posPaymentToken (POS-CHK-{uuid}) is the sole identifier sent to FinPaymentIntent; WAIVED_HAR","crossSuiteRef":"appointmentId -> HltAppointment, patientId -> HltPatient, assignedRoomId -> HltC","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550144","status":"NONE_DUE","moderationStage":"NONE_DUE","version":5,"isDeleted":false,"checkInRef":"Check In Ref — FDC-2026-705","arrivedAt":"Arrived At — FDC-2026-705","roomedAt":"Roomed At — FDC-2026-705","checkedOutAt":"Checked Out At — FDC-2026-705","photoIdVerified":true,"hipaaNoticeSigned":"Hipaa Notice Signed — FDC-2026-705","demographicsConfirmed":"Demographics Confirmed — FDC-2026-705","currency":"Currency — FDC-2026-705","estimatedPatientDue":"Estimated Patient Due — FDC-2026-705","copayCollectedAmount":"1065.00","posPaymentToken":"Pos Payment Token — FDC-2026-705","paymentStatus":"NONE_DUE","waiverReason":"Waiver Reason — FDC-2026-705"}],"HltReferralOrder":[{"id":"00000000-0152-0008-0000-000000000001","recordCode":"RO-2026-801","title":"Medical Practice Management Referral Order — Unit #1","name":"Medical Practice Management Referral Order — Unit #1","modelTitle":"Referral Order","ownerName":"Marcus Vance (Senior Operations)","primaryAttrLabel":"Referral Ref","primaryAttrValue":"Referral Ref: RO-2026-801","secondaryAttrLabel":"Direction","secondaryAttrValue":"INBOUND_TO_CLINIC","metricLabel":"Urgency","metricValue":"92.7% (1000.00 units)","operationalSummary":"STAT referrals unscheduled beyond 24 hours auto-escalate via Home WorkItem; LOOP_CLOSED requires consultR","invariantRule":"STAT referrals unscheduled beyond 24 hours auto-escalate via Home WorkItem; LOOP_CLOSED requires consultReportSentAt != ","crossSuiteRef":"patientId -> HltPatient, referringProviderId -> HltProviderProfile?, receivingPr","updatedAt":"2026-05-10 09:15","contactPhone":"+14155550145","status":"NEW_UNSCHEDULED","moderationStage":"NEW_UNSCHEDULED","version":1,"isDeleted":false,"referralRef":"Referral Ref — RO-2026-801","direction":"INBOUND_TO_CLINIC","urgency":"ROUTINE","targetSpecialty":"Target Specialty — RO-2026-801","reasonIcd10Code":"Reason Icd10 Code — RO-2026-801","clinicalSummaryNote":"Clinical Summary Note — RO-2026-801","externalProviderName":"External Provider Name — RO-2026-801","externalProviderNpi":"External Provider Npi — RO-2026-801","externalProviderPhone":"External Provider Phone — RO-2026-801","consultReportSentAt":"Consult Report Sent At — RO-2026-801"},{"id":"00000000-0152-0008-0000-000000000002","recordCode":"RO-2026-802","title":"Medical Practice Management Referral Order — Unit #2","name":"Medical Practice Management Referral Order — Unit #2","modelTitle":"Referral Order","ownerName":"Sophia Laurent (Director)","primaryAttrLabel":"Referral Ref","primaryAttrValue":"Referral Ref: RO-2026-802","secondaryAttrLabel":"Direction","secondaryAttrValue":"OUTBOUND_EXTERNAL","metricLabel":"Urgency","metricValue":"93.8% (1047.50 units)","operationalSummary":"STAT referrals unscheduled beyond 24 hours auto-escalate via Home WorkItem; LOOP_CLOSED requires consultR","invariantRule":"STAT referrals unscheduled beyond 24 hours auto-escalate via Home WorkItem; LOOP_CLOSED requires consultReportSentAt != ","crossSuiteRef":"patientId -> HltPatient, referringProviderId -> HltProviderProfile?, receivingPr","updatedAt":"2026-05-11 11:15","contactPhone":"+14155550146","status":"AUTH_PENDING","moderationStage":"AUTH_PENDING","version":2,"isDeleted":false,"referralRef":"Referral Ref — RO-2026-802","direction":"OUTBOUND_EXTERNAL","urgency":"URGENT","targetSpecialty":"Target Specialty — RO-2026-802","reasonIcd10Code":"Reason Icd10 Code — RO-2026-802","clinicalSummaryNote":"Clinical Summary Note — RO-2026-802","externalProviderName":"External Provider Name — RO-2026-802","externalProviderNpi":"External Provider Npi — RO-2026-802","externalProviderPhone":"External Provider Phone — RO-2026-802","consultReportSentAt":"Consult Report Sent At — RO-2026-802"},{"id":"00000000-0152-0008-0000-000000000003","recordCode":"RO-2026-803","title":"Medical Practice Management Referral Order — Unit #3","name":"Medical Practice Management Referral Order — Unit #3","modelTitle":"Referral Order","ownerName":"Liam Chen (Systems Architect)","primaryAttrLabel":"Referral Ref","primaryAttrValue":"Referral Ref: RO-2026-803","secondaryAttrLabel":"Direction","secondaryAttrValue":"INTERNAL_SPECIALTY","metricLabel":"Urgency","metricValue":"94.0% (1095.00 units)","operationalSummary":"STAT referrals unscheduled beyond 24 hours auto-escalate via Home WorkItem; LOOP_CLOSED requires consultR","invariantRule":"STAT referrals unscheduled beyond 24 hours auto-escalate via Home WorkItem; LOOP_CLOSED requires consultReportSentAt != ","crossSuiteRef":"patientId -> HltPatient, referringProviderId -> HltProviderProfile?, receivingPr","updatedAt":"2026-05-12 13:15","contactPhone":"+14155550147","status":"SCHEDULED","moderationStage":"SCHEDULED","version":3,"isDeleted":false,"referralRef":"Referral Ref — RO-2026-803","direction":"INTERNAL_SPECIALTY","urgency":"STAT","targetSpecialty":"Target Specialty — RO-2026-803","reasonIcd10Code":"Reason Icd10 Code — RO-2026-803","clinicalSummaryNote":"Clinical Summary Note — RO-2026-803","externalProviderName":"External Provider Name — RO-2026-803","externalProviderNpi":"External Provider Npi — RO-2026-803","externalProviderPhone":"External Provider Phone — RO-2026-803","consultReportSentAt":"Consult Report Sent At — RO-2026-803"},{"id":"00000000-0152-0008-0000-000000000004","recordCode":"RO-2026-804","title":"Medical Practice Management Referral Order — Unit #4","name":"Medical Practice Management Referral Order — Unit #4","modelTitle":"Referral Order","ownerName":"Amira Al-Mansoor (Compliance Lead)","primaryAttrLabel":"Referral Ref","primaryAttrValue":"Referral Ref: RO-2026-804","secondaryAttrLabel":"Direction","secondaryAttrValue":"INBOUND_TO_CLINIC","metricLabel":"Urgency","metricValue":"95.1% (1142.50 units)","operationalSummary":"STAT referrals unscheduled beyond 24 hours auto-escalate via Home WorkItem; LOOP_CLOSED requires consultR","invariantRule":"STAT referrals unscheduled beyond 24 hours auto-escalate via Home WorkItem; LOOP_CLOSED requires consultReportSentAt != ","crossSuiteRef":"patientId -> HltPatient, referringProviderId -> HltProviderProfile?, receivingPr","updatedAt":"2026-05-13 15:15","contactPhone":"+14155550148","status":"CONSULT_COMPLETED","moderationStage":"CONSULT_COMPLETED","version":4,"isDeleted":false,"referralRef":"Referral Ref — RO-2026-804","direction":"INBOUND_TO_CLINIC","urgency":"ROUTINE","targetSpecialty":"Target Specialty — RO-2026-804","reasonIcd10Code":"Reason Icd10 Code — RO-2026-804","clinicalSummaryNote":"Clinical Summary Note — RO-2026-804","externalProviderName":"External Provider Name — RO-2026-804","externalProviderNpi":"External Provider Npi — RO-2026-804","externalProviderPhone":"External Provider Phone — RO-2026-804","consultReportSentAt":"Consult Report Sent At — RO-2026-804"},{"id":"00000000-0152-0008-0000-000000000005","recordCode":"RO-2026-805","title":"Medical Practice Management Referral Order — Unit #5","name":"Medical Practice Management Referral Order — Unit #5","modelTitle":"Referral Order","ownerName":"Noah Kowalski (Specialist)","primaryAttrLabel":"Referral Ref","primaryAttrValue":"Referral Ref: RO-2026-805","secondaryAttrLabel":"Direction","secondaryAttrValue":"OUTBOUND_EXTERNAL","metricLabel":"Urgency","metricValue":"96.2% (1190.00 units)","operationalSummary":"STAT referrals unscheduled beyond 24 hours auto-escalate via Home WorkItem; LOOP_CLOSED requires consultR","invariantRule":"STAT referrals unscheduled beyond 24 hours auto-escalate via Home WorkItem; LOOP_CLOSED requires consultReportSentAt != ","crossSuiteRef":"patientId -> HltPatient, referringProviderId -> HltProviderProfile?, receivingPr","updatedAt":"2026-05-14 17:15","contactPhone":"+14155550149","status":"LOOP_CLOSED","moderationStage":"LOOP_CLOSED","version":5,"isDeleted":false,"referralRef":"Referral Ref — RO-2026-805","direction":"OUTBOUND_EXTERNAL","urgency":"URGENT","targetSpecialty":"Target Specialty — RO-2026-805","reasonIcd10Code":"Reason Icd10 Code — RO-2026-805","clinicalSummaryNote":"Clinical Summary Note — RO-2026-805","externalProviderName":"External Provider Name — RO-2026-805","externalProviderNpi":"External Provider Npi — RO-2026-805","externalProviderPhone":"External Provider Phone — RO-2026-805","consultReportSentAt":"Consult Report Sent At — RO-2026-805"}]};
+
+    window.loadEntitySWR = async function(entityName, onUpdate) {
+      var fallback = (window.SEED_DATA && window.SEED_DATA[entityName]) ? window.SEED_DATA[entityName].slice() : [];
+      try {
+        if (window.rapiderApi && typeof window.rapiderApi.findSWR === 'function') {
+          var res = await window.rapiderApi.findSWR(entityName, {}, function(fresh) {
+            if (Array.isArray(fresh) && fresh.length > 0) {
+              onUpdate(fresh.filter(function(r) { return r && r.isDeleted !== true; }));
+            }
+          });
+          var arr = Array.isArray(res) ? res : (res && Array.isArray(res.data) ? res.data : []);
+          var clean = arr.filter(function(r) { return r && r.isDeleted !== true; });
+          onUpdate(clean.length > 0 ? clean : fallback);
+          return;
+        }
+      } catch (_) {}
+      onUpdate(fallback);
+    };
+
+
+        window.loadEntitySWR('HltAppointmentSlot', function() {});
+        window.autofillAi_10 = function() {
+          document.getElementById('fTitle_10').value = "Medical Practice Management Appointment Slot — Automated SOW Scenario";
+          document.getElementById('fNotes_10').value = "Grounded in HltAppointmentSlot SOW contract: bookedCount <= maxBookings; isBlockedTimeOff == true blocks new bookings automatically when synced from HrTime";
+          window.toast('AI Copilot populated grounded Appointment Slot draft fields.', 'info');
+        };
+        window.submitDrawer_10 = async function(ev) {
+          ev.preventDefault();
+          var btn = document.getElementById('saveBtn_10');
+          btn.disabled = true;
+          try {
+            var payload = {
+              recordCode: document.getElementById('fColA_10').value.trim(),
+              title: document.getElementById('fTitle_10').value.trim(),
+              name: document.getElementById('fTitle_10').value.trim(),
+              modelTitle: "Appointment Slot",
+              ownerName: "Elena Vance",
+              primaryAttrLabel: "Template Name",
+              primaryAttrValue: document.getElementById('fColA_10').value.trim(),
+              secondaryAttrLabel: "Slot Date",
+              secondaryAttrValue: document.getElementById('fColB_10').value.trim(),
+              metricLabel: "Start Time Utc",
+              metricValue: document.getElementById('fColC_10').value.trim(),
+              operationalSummary: document.getElementById('fNotes_10').value.trim(),
+              status: document.getElementById('fStatus_10').value,
+              moderationStage: document.getElementById('fStatus_10').value,
+              updatedAt: 'Just now'
+            };
+            if (window.rapiderApi && typeof window.rapiderApi.create === 'function') {
+              await window.rapiderApi.create('HltAppointmentSlot', payload);
+            }
+            window.toast('Saved Appointment Slot record and synchronized SWR state.', 'success');
+            window.closePageDrawer('schedule-calendar');
+          } finally {
+            btn.disabled = false;
+          }
+        };
+      
+  </script>
 </body>
 </html>
